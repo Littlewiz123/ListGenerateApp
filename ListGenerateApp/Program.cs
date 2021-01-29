@@ -169,8 +169,43 @@ namespace ListGenerateApp
                     } 
                     break;
                 case ("2"):
-                    var sortList = saveListEmployee.OrderBy(x => x).ToList();
-                    foreach (var employee in sortList)
+                    var sortListByName = saveListEmployee.OrderBy(x => x.Name).ToList();
+                    foreach (var employee in sortListByName)
+                    {
+                        Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+                    }
+                    break;
+                case ("3"):
+                    var sortListByAge = saveListEmployee.OrderBy(x => x.Age).ToList();
+                    foreach (var employee in sortListByAge)
+                    {
+                        Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+                    }
+                    break;
+                case ("4"):
+                    List<Employee> filterMaleList = new List<Employee>();
+                    saveListEmployee.ForEach(em =>
+                    {
+                        if (em.Gender == "Male")
+                        {
+                            filterMaleList.Add(em);
+                        }
+                    });
+                    foreach (var employee in filterMaleList)
+                    {
+                        Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+                    }
+                    break;
+                case ("5"):
+                    List<Employee> filterFemaleList = new List<Employee>();
+                    saveListEmployee.ForEach(em =>
+                    {
+                        if (em.Gender == "Female")
+                        {
+                            filterFemaleList.Add(em);
+                        }
+                    });
+                    foreach (var employee in filterFemaleList)
                     {
                         Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
                     }
