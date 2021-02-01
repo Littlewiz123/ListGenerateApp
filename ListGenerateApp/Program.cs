@@ -124,8 +124,17 @@ namespace ListGenerateApp
             string gender = genders[index];
             return gender;
         }
+
+        public static void Print(string s, ConsoleColor color = ConsoleColor.Yellow)
+        {
+            ConsoleColor lastColor = Console.ForegroundColor;
+            Console.ForegroundColor = color;
+            Console.WriteLine(s);
+            Console.ForegroundColor = lastColor;
+        }
         static void Main(string[] args)
         {
+            Print("Test string ...");
             Console.WriteLine(GetRandomGender());
             List<Employee> listEmployee = new List<Employee>();
             List<Employee> saveListEmployee = new List<Employee>();
@@ -149,69 +158,57 @@ namespace ListGenerateApp
             Console.WriteLine("4 - Filter list only Male");
             Console.WriteLine("5 - Filter list only Female");
             string option = Console.ReadLine();
-            switch(option)
+            if(option != null)
             {
-                case ("1"):
-                    Console.WriteLine("Enter keyword");
-                    string text = Console.ReadLine().ToLower();
-                    List<Employee> filterList = new List<Employee>();
-                    foreach(var employee in listEmployee)
-                    {
-                        if(employee.Name.ToLower().IndexOf(text.ToLower()) != -1)
+                switch (option)
+                {
+                    case ("1"):
+                        Console.WriteLine("Enter keyword");
+                        string text = Console.ReadLine().ToLower();
+                        List<Employee> filterList = saveListEmployee.FindAll(employee => employee.Name.ToLower().IndexOf(text.ToLower()) != -1);
+                        if (filterList.Count > 0)
+                            foreach (var employee in filterList)
+                            {
+                                Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+                            }
+                        break;
+                    case ("2"):
+                        var sortListByName = saveListEmployee.OrderBy(x => x.Name).ToList();
+                        foreach (var employee in sortListByName)
                         {
-                            filterList.Add(employee);
+                            Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
                         }
-                    }
-                    if(filterList.Count > 0)
-                    foreach (var employee in filterList)
-                    {
-                        Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
-                    } 
-                    break;
-                case ("2"):
-                    var sortListByName = saveListEmployee.OrderBy(x => x.Name).ToList();
-                    foreach (var employee in sortListByName)
-                    {
-                        Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
-                    }
-                    break;
-                case ("3"):
-                    var sortListByAge = saveListEmployee.OrderBy(x => x.Age).ToList();
-                    foreach (var employee in sortListByAge)
-                    {
-                        Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
-                    }
-                    break;
-                case ("4"):
-                    List<Employee> filterMaleList = new List<Employee>();
-                    saveListEmployee.ForEach(em =>
-                    {
-                        if (em.Gender == "Male")
+                        break;
+                    case ("3"):
+                        saveListEmployee.Sort((em1, em2) => {
+                            if (em1.Age > em2.Age)
+                                return 1;
+                            else if (em1.Age == em2.Age)
+                                return 0;
+                            return -1;
+                        });
+                        foreach (var employee in saveListEmployee)
                         {
-                            filterMaleList.Add(em);
+                            Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
                         }
-                    });
-                    foreach (var employee in filterMaleList)
-                    {
-                        Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
-                    }
-                    break;
-                case ("5"):
-                    List<Employee> filterFemaleList = new List<Employee>();
-                    saveListEmployee.ForEach(em =>
-                    {
-                        if (em.Gender == "Female")
+                        break;
+                    case ("4"):
+                        List<Employee> filterMaleList = saveListEmployee.FindAll(employee => employee.Gender.ToLower() == "Male".ToLower());
+                        foreach (var employee in filterMaleList)
                         {
-                            filterFemaleList.Add(em);
+                            Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
                         }
-                    });
-                    foreach (var employee in filterFemaleList)
-                    {
-                        Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
-                    }
-                    break;
-                default:
-                    break;
+                        break;
+                    case ("5"):
+                        List<Employee> filterFemaleList = saveListEmployee.FindAll(employee => employee.Gender.ToLower() == "Female".ToLower());
+                        foreach (var employee in filterFemaleList)
+                        {
+                            Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }

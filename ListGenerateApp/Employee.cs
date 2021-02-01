@@ -6,10 +6,10 @@ namespace ListGenerateApp
 {
     class Employee
     {
-        private string id;
-        private string name;
-        private int age;
-        private string gender;
+        public string id;
+        public string name;
+        public int age;
+        public string gender;
 
         public Employee(string Id, string Name, int Age, string Gender)
         {
