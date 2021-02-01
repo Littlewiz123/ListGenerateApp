@@ -125,16 +125,8 @@ namespace ListGenerateApp
             return gender;
         }
 
-        public static void Print(string s, ConsoleColor color = ConsoleColor.Yellow)
-        {
-            ConsoleColor lastColor = Console.ForegroundColor;
-            Console.ForegroundColor = color;
-            Console.WriteLine(s);
-            Console.ForegroundColor = lastColor;
-        }
         static void Main(string[] args)
         {
-            Print("Test string ...");
             Console.WriteLine(GetRandomGender());
             List<Employee> listEmployee = new List<Employee>();
             List<Employee> saveListEmployee = new List<Employee>();
