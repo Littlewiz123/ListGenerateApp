@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 //using Npgsql;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
+
+using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ListGenerateApp
 {
@@ -127,9 +133,81 @@ namespace ListGenerateApp
 
         static void Main(string[] args)
         {
+            Employee abc = new Employee("1000", "Đức", 24, "Male");
+            foreach(PropertyInfo property in abc.GetType().GetProperties())
+            {
+                string property_name = property.Name;
+                object property_value = property.GetValue(abc);
+                Console.WriteLine($"Thuộc tính {property_name} giá trị là {property_value}");
+            }
+
+            Employee ng1 = new Employee(new BigYell());
+            ng1.Yell();
+
+            // Tạo và cấu hình ServiceCollection
+            var services = new ServiceCollection();
+            services.AddSingleton<A>(); // Đăng ký dịch vụ A,  kiểu singleton (một bản đơn nhất)
+            services.AddTransient<B>(); // Đăng ký dịch vụ B, kiểu transient (tạo mới mỗi khi yêu cầu)
+            services.AddScoped<C>();    // Đăng ký dịch vụ C, kiểu scoped (tạo mới trong một phạm vi)
+
+            var serviceprovider = services.BuildServiceProvider(); // Tạo serviceprovider
+
+            // SỬ DỤNG
+
+
+            // Yêu cầu dịch vụ B, DI tự động tạo A và Inject vào B khi B khởi tạo
+            Console.WriteLine("Yêu cầu lấy dịch B lần đầu, lưu vào b1:");
+            B b1 = serviceprovider.GetService<B>();
+            // Output:
+            //    A created
+            //    B created
+
+            // Yêu cầu lại dịch vụ B: B đăng ký là transient (tạm), nên đối tượng thực sự tạo lại
+            // Dịch vụ A do là singleton, nên nó không tạo lại (có sẵn trong ServiceCollection đã tạo lần trước)
+            // nó sẽ Inject vào dịch vụ B mới
+            Console.WriteLine("Yêu cầu lấy dịch B lần hai, lưu vào b2:");
+            B b2 = serviceprovider.GetService<B>();
+            // Output:
+            //    B created
+
+            // b1 và b2 là hai đối tượng khác nhau
+            Console.WriteLine("Thông tin về b1 và b2:");
+            b1.ShowInfo();
+            b2.ShowInfo();
+
+
+            // Yêu  cầu  A, A (singleton) đã tạo nên nó trả về đối dịch vụ
+            // đã từng tạo khi tạo B (Inject vào B)
+            Console.WriteLine("Yêu cầu lấy dịch A, lưu vào a:");
+            A a = serviceprovider.GetService<A>();
+            //Console.WriteLine("Thông tin về a:");
+            //a.ShowInfo();
+
+            // Yêu cầu dịch vụ C, C là loại scoped (1 phiên bản trong một phạm vi, scoped)
+            Console.WriteLine("Yêu cầu lấy dịch C, lưu vào c1:");
+            C c1 = serviceprovider.GetService<C>();
+            // Out: C created
+
+            // Yêu cầu C, C không tạo mới vì scoped không đổi, nó chính là c1
+            Console.WriteLine("Yêu cầu lấy dịch C lần 2, lưu vào c2:");
+            C c2 = serviceprovider.GetService<C>();
+
+            Console.WriteLine("Thông tin về c1 và c2:");
+            c1.ShowInfo();
+            c2.ShowInfo();
+
+            // Tạo scope mới
+            Console.WriteLine("-----------New scope---------");
+            using (var scope = serviceprovider.CreateScope())
+            {
+                // Yêu  cầu  A, A đã tạo nên nó trả về đối dịch vụ mà đã Inject vào B, cho dù là scope mới
+                a = scope.ServiceProvider.GetService<A>();
+                // Yêu cầu C, C tạo mới vì scope mới (C kiểu scoped)
+                C c = scope.ServiceProvider.GetService<C>();
+            }
+
             Console.WriteLine(GetRandomGender());
             List<Employee> listEmployee = new List<Employee>();
-            List<Employee> saveListEmployee = new List<Employee>();
             for (int i = 0; i < 1000; i++)
             {
                 Random r = new Random();
@@ -140,9 +218,17 @@ namespace ListGenerateApp
                 
                 listEmployee.Add(new Employee(id, randName, randAge, randGender));
             }
+            List<Employee> saveListEmployee = new List<Employee>();
             listEmployee.ForEach((item) => {
                 saveListEmployee.Add(item);
             });
+
+            //var testLinq = from employee in listEmployee select employee;
+            //foreach(var em in testLinq)
+            //{
+            //    Console.WriteLine(em.Id + " " + em.Name + " " + em.Age + " " + em.Gender);
+            //}
+
             Console.WriteLine("Select Options");
             Console.WriteLine("1 - Search by Name");
             Console.WriteLine("2 - Order list by User Name");

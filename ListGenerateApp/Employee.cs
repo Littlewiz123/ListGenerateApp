@@ -4,6 +4,11 @@ using System.Text;
 
 namespace ListGenerateApp
 {
+    public interface ITalk
+    {
+        void Yell();
+    }
+
     class Employee
     {
         public string id;
@@ -42,5 +47,19 @@ namespace ListGenerateApp
             get { return gender; }
             set { gender = value; }
         }
+
+        ITalk talk;
+        public Employee(ITalk talk) => this.talk = talk;
+        public void Yell() => talk.Yell();
+    }
+
+    public class BigYell : ITalk
+    {
+        public void Yell() => Console.WriteLine("Het to....");
+    }
+
+    public class SmallYell : ITalk
+    {
+        public void Yell() => Console.WriteLine("het  nho .....");
     }
 }
