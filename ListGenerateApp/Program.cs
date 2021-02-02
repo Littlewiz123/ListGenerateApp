@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 //using Npgsql;
 
 namespace ListGenerateApp
@@ -112,25 +111,25 @@ namespace ListGenerateApp
             lst.Add("Diaz");
             lst.Add("Hayes");
             Random rnd = new Random();
-            str = lst.OrderBy(xx => rnd.Next()).First();
-            return str;
+            return lst[rnd.Next(0, lst.Count)];
         }
 
         static string GetRandomGender()
         {
             string[] genders = new string[] { "Male", "Female" };
             Random rand = new Random();
-            int index = rand.Next(genders.Count());
+            int index = rand.Next(genders.Length);
             string gender = genders[index];
             return gender;
         }
 
         static void Main(string[] args)
         {
-            Console.WriteLine(GetRandomGender());
             List<Employee> listEmployee = new List<Employee>();
             List<Employee> saveListEmployee = new List<Employee>();
-            for (int i = 0; i < 1000; i++)
+            Console.WriteLine("Enter quantity of employees to save to Database: ");
+            int numberSave = int.Parse(Console.ReadLine());
+            for (int i = 0; i < numberSave; i++)
             {
                 Random r = new Random();
                 string id = i.ToString();
@@ -143,65 +142,75 @@ namespace ListGenerateApp
             listEmployee.ForEach((item) => {
                 saveListEmployee.Add(item);
             });
-            Console.WriteLine("Select Options");
-            Console.WriteLine("1 - Search by Name");
-            Console.WriteLine("2 - Order list by User Name");
-            Console.WriteLine("3 - Order list by Age");
-            Console.WriteLine("4 - Filter list only Male");
-            Console.WriteLine("5 - Filter list only Female");
-            string option = Console.ReadLine();
-            if(option != null)
+            int option;
+            do
             {
-                switch (option)
+                Console.WriteLine();
+                Console.WriteLine("Select Number Options");
+                Console.WriteLine("1 - Search by Name");
+                Console.WriteLine("2 - Order list by User Name");
+                Console.WriteLine("3 - Order list by Age");
+                Console.WriteLine("4 - Filter list only Male");
+                Console.WriteLine("5 - Filter list only Female");
+                Console.WriteLine("Press any key to exit menu!");
+                option = int.Parse(Console.ReadLine());
+                if (option >= 6)
                 {
-                    case ("1"):
-                        Console.WriteLine("Enter keyword");
-                        string text = Console.ReadLine().ToLower();
-                        List<Employee> filterList = saveListEmployee.FindAll(employee => employee.Name.ToLower().IndexOf(text.ToLower()) != -1);
-                        if (filterList.Count > 0)
-                            foreach (var employee in filterList)
+                    System.Environment.Exit(1);
+                }
+                else 
+                {
+                    switch (option)
+                    {
+                        case (1):
+                            Console.WriteLine("Enter keyword");
+                            string text = Console.ReadLine().ToLower();
+                            List<Employee> filterList = saveListEmployee.FindAll(employee => employee.Name.ToLower().IndexOf(text.ToLower()) != -1);
+                            if (filterList.Count > 0)
+                                foreach (var employee in filterList)
+                                {
+                                    Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+                                }
+                            break;
+                        case (2):
+                            saveListEmployee.Sort((e1, e2) => e1.Name.CompareTo(e2.Name));
+                            foreach (var employee in saveListEmployee)
                             {
                                 Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
                             }
-                        break;
-                    case ("2"):
-                        var sortListByName = saveListEmployee.OrderBy(x => x.Name).ToList();
-                        foreach (var employee in sortListByName)
-                        {
-                            Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
-                        }
-                        break;
-                    case ("3"):
-                        saveListEmployee.Sort((em1, em2) => {
-                            if (em1.Age > em2.Age)
-                                return 1;
-                            else if (em1.Age == em2.Age)
-                                return 0;
-                            return -1;
-                        });
-                        foreach (var employee in saveListEmployee)
-                        {
-                            Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
-                        }
-                        break;
-                    case ("4"):
-                        List<Employee> filterMaleList = saveListEmployee.FindAll(employee => employee.Gender.ToLower() == "Male".ToLower());
-                        foreach (var employee in filterMaleList)
-                        {
-                            Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
-                        }
-                        break;
-                    case ("5"):
-                        List<Employee> filterFemaleList = saveListEmployee.FindAll(employee => employee.Gender.ToLower() == "Female".ToLower());
-                        foreach (var employee in filterFemaleList)
-                        {
-                            Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
-                        }
-                        break;
-                    default:
-                        break;
+                            break;
+                        case (3):
+                            saveListEmployee.Sort((em1, em2) => {
+                                if (em1.Age > em2.Age)
+                                    return 1;
+                                else if (em1.Age == em2.Age)
+                                    return 0;
+                                return -1;
+                            });
+                            foreach (var employee in saveListEmployee)
+                            {
+                                Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+                            }
+                            break;
+                        case (4):
+                            List<Employee> filterMaleList = saveListEmployee.FindAll(employee => employee.Gender.ToLower() == "Male".ToLower());
+                            foreach (var employee in filterMaleList)
+                            {
+                                Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+                            }
+                            break;
+                        case (5):
+                            List<Employee> filterFemaleList = saveListEmployee.FindAll(employee => employee.Gender.ToLower() == "Female".ToLower());
+                            foreach (var employee in filterFemaleList)
+                            {
+                                Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
+            } while (option < 5);
         }
     }
 }
