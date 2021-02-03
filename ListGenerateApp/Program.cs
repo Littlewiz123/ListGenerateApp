@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-//using Npgsql;
+using Npgsql;
 
 namespace ListGenerateApp
 {
@@ -114,6 +114,217 @@ namespace ListGenerateApp
             return lst[rnd.Next(0, lst.Count)];
         }
 
+        public static string GenRandomFirstName()
+        {
+            List<string> lst = new List<string>();
+            string str = string.Empty;
+            lst.Add("Aiden");
+            lst.Add("Jackson");
+            lst.Add("Mason");
+            lst.Add("Liam");
+            lst.Add("Jacob");
+            lst.Add("Jayden");
+            lst.Add("Ethan");
+            lst.Add("Noah");
+            lst.Add("Lucas");
+            lst.Add("Logan");
+            lst.Add("Caleb");
+            lst.Add("Caden");
+            lst.Add("Jack");
+            lst.Add("Ryan");
+            lst.Add("Connor");
+            lst.Add("Michael");
+            lst.Add("Elijah");
+            lst.Add("Brayden");
+            lst.Add("Benjamin");
+            lst.Add("Nicholas");
+            lst.Add("Alexander");
+            lst.Add("William");
+            lst.Add("Matthew");
+            lst.Add("James");
+            lst.Add("Landon");
+            lst.Add("Nathan");
+            lst.Add("Dylan");
+            lst.Add("Evan");
+            lst.Add("Luke");
+            lst.Add("Andrew");
+            lst.Add("Gabriel");
+            lst.Add("Gavin");
+            lst.Add("Joshua");
+            lst.Add("Owen");
+            lst.Add("Daniel");
+            lst.Add("Carter");
+            lst.Add("Tyler");
+            lst.Add("Cameron");
+            lst.Add("Christian");
+            lst.Add("Wyatt");
+            lst.Add("Henry");
+            lst.Add("Eli");
+            lst.Add("Joseph");
+            lst.Add("Max");
+            lst.Add("Isaac");
+            lst.Add("Samuel");
+            lst.Add("Anthony");
+            lst.Add("Grayson");
+            lst.Add("Zachary");
+            lst.Add("David");
+            lst.Add("Christopher");
+            lst.Add("John");
+            lst.Add("Isaiah");
+            lst.Add("Levi");
+            lst.Add("Jonathan");
+            lst.Add("Oliver");
+            lst.Add("Chase");
+            lst.Add("Cooper");
+            lst.Add("Tristan");
+            lst.Add("Colton");
+            lst.Add("Austin");
+            lst.Add("Colin");
+            lst.Add("Charlie");
+            lst.Add("Dominic");
+            lst.Add("Parker");
+            lst.Add("Hunter");
+            lst.Add("Thomas");
+            lst.Add("Alex");
+            lst.Add("Ian");
+            lst.Add("Jordan");
+            lst.Add("Cole");
+            lst.Add("Julian");
+            lst.Add("Aaron");
+            lst.Add("Carson");
+            lst.Add("Miles");
+            lst.Add("Blake");
+            lst.Add("Brody");
+            lst.Add("Adam");
+            lst.Add("Sebastian");
+            lst.Add("Adrian");
+            lst.Add("Nolan");
+            lst.Add("Sean");
+            lst.Add("Riley");
+            lst.Add("Bentley");
+            lst.Add("Xavier");
+            lst.Add("Hayden");
+            lst.Add("Jeremiah");
+            lst.Add("Jason");
+            lst.Add("Jake");
+            lst.Add("Asher");
+            lst.Add("Micah");
+            lst.Add("Jace");
+            lst.Add("Brandon");
+            lst.Add("Josiah");
+            lst.Add("Hudson");
+            lst.Add("Nathaniel");
+            lst.Add("Bryson");
+            lst.Add("Ryder");
+            lst.Add("Justin");
+            lst.Add("Bryce");
+
+            //—————female
+
+            lst.Add("Sophia");
+            lst.Add("Emma");
+            lst.Add("Isabella");
+            lst.Add("Olivia");
+            lst.Add("Ava");
+            lst.Add("Lily");
+            lst.Add("Chloe");
+            lst.Add("Madison");
+            lst.Add("Emily");
+            lst.Add("Abigail");
+            lst.Add("Addison");
+            lst.Add("Mia");
+            lst.Add("Madelyn");
+            lst.Add("Ella");
+            lst.Add("Hailey");
+            lst.Add("Kaylee");
+            lst.Add("Avery");
+            lst.Add("Kaitlyn");
+            lst.Add("Riley");
+            lst.Add("Aubrey");
+            lst.Add("Brooklyn");
+            lst.Add("Peyton");
+            lst.Add("Layla");
+            lst.Add("Hannah");
+            lst.Add("Charlotte");
+            lst.Add("Bella");
+            lst.Add("Natalie");
+            lst.Add("Sarah");
+            lst.Add("Grace");
+            lst.Add("Amelia");
+            lst.Add("Kylie");
+            lst.Add("Arianna");
+            lst.Add("Anna");
+            lst.Add("Elizabeth");
+            lst.Add("Sophie");
+            lst.Add("Claire");
+            lst.Add("Lila");
+            lst.Add("Aaliyah");
+            lst.Add("Gabriella");
+            lst.Add("Elise");
+            lst.Add("Lillian");
+            lst.Add("Samantha");
+            lst.Add("Makayla");
+            lst.Add("Audrey");
+            lst.Add("Alyssa");
+            lst.Add("Ellie");
+            lst.Add("Alexis");
+            lst.Add("Isabelle");
+            lst.Add("Savannah");
+            lst.Add("Evelyn");
+            lst.Add("Leah");
+            lst.Add("Keira");
+            lst.Add("Allison");
+            lst.Add("Maya");
+            lst.Add("Lucy");
+            lst.Add("Sydney");
+            lst.Add("Taylor");
+            lst.Add("Molly");
+            lst.Add("Lauren");
+            lst.Add("Harper");
+            lst.Add("Scarlett");
+            lst.Add("Brianna");
+            lst.Add("Victoria");
+            lst.Add("Liliana");
+            lst.Add("Aria");
+            lst.Add("Kayla");
+            lst.Add("Annabelle");
+            lst.Add("Gianna");
+            lst.Add("Kennedy");
+            lst.Add("Stella");
+            lst.Add("Reagan");
+            lst.Add("Julia");
+            lst.Add("Bailey");
+            lst.Add("Alexandra");
+            lst.Add("Jordyn");
+            lst.Add("Nora");
+            lst.Add("Carolin");
+            lst.Add("Mackenzie");
+            lst.Add("Jasmine");
+            lst.Add("Jocelyn");
+            lst.Add("Kendall");
+            lst.Add("Morgan");
+            lst.Add("Nevaeh");
+            lst.Add("Maria");
+            lst.Add("Eva");
+            lst.Add("Juliana");
+            lst.Add("Abby");
+            lst.Add("Alexa");
+            lst.Add("Summer");
+            lst.Add("Brooke");
+            lst.Add("Penelope");
+            lst.Add("Violet");
+            lst.Add("Kate");
+            lst.Add("Hadley");
+            lst.Add("Ashlyn");
+            lst.Add("Sadie");
+            lst.Add("Paige");
+            lst.Add("Katherine");
+            lst.Add("Sienna");
+            lst.Add("Piper");
+            Random rnd = new Random();
+            return lst[rnd.Next(0, lst.Count)];
+        }
+            
         static string GetRandomGender()
         {
             string[] genders = new string[] { "Male", "Female" };
@@ -125,6 +336,24 @@ namespace ListGenerateApp
 
         static void Main(string[] args)
         {
+            // Specify connection options and open an connection
+            NpgsqlConnection conn = new NpgsqlConnection("Server=172.16.8.20;User Id=POSMAN;" +
+                                    "Password=apzon123;Database=Duc_Database;");
+            conn.Open();
+
+            // Define a query
+            NpgsqlCommand cmd = new NpgsqlCommand("select * from Employees", conn);
+
+            // Execute a query
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+
+            // Read all rows and output the first column in each row
+            while (dr.Read())
+                Console.Write("{0}\t{1} \n", dr[0], dr[1]);
+
+            // Close connection
+            conn.Close();
+
             List<Employee> listEmployee = new List<Employee>();
             List<Employee> saveListEmployee = new List<Employee>();
             Console.WriteLine("Enter quantity of employees to save to Database: ");
