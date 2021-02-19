@@ -6,12 +6,12 @@ namespace ListGenerateApp
 {
     class Employee
     {
-        public string id;
+        public int id;
         public string name;
         public int age;
         public string gender;
 
-        public Employee(string Id, string Name, int Age, string Gender)
+        public Employee(int Id, string Name, int Age, string Gender)
         {
             this.id = Id;
             this.name = Name;
@@ -25,7 +25,7 @@ namespace ListGenerateApp
             set { name = value; }
         }
 
-        public string Id
+        public int Id
         {
             get { return id; }
             set { id = value; }

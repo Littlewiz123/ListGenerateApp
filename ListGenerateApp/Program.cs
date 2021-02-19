@@ -324,7 +324,7 @@ namespace ListGenerateApp
             Random rnd = new Random();
             return lst[rnd.Next(0, lst.Count)];
         }
-            
+
         static string GetRandomGender()
         {
             string[] genders = new string[] { "Male", "Female" };
@@ -341,16 +341,6 @@ namespace ListGenerateApp
                                     "Password=apzon123;Database=Duc_Database;");
             conn.Open();
 
-            // Define a query
-            NpgsqlCommand cmd = new NpgsqlCommand("select * from Employees", conn);
-
-            // Execute a query
-            NpgsqlDataReader dr = cmd.ExecuteReader();
-
-            // Read all rows and output the first column in each row
-            while (dr.Read())
-                Console.Write("{0}\t{1} \n", dr[0], dr[1]);
-
             // Close connection
             conn.Close();
 
@@ -358,17 +348,51 @@ namespace ListGenerateApp
             List<Employee> saveListEmployee = new List<Employee>();
             Console.WriteLine("Enter quantity of employees to save to Database: ");
             int numberSave = int.Parse(Console.ReadLine());
+
+            conn.Open();
             for (int i = 0; i < numberSave; i++)
             {
                 Random r = new Random();
-                string id = i.ToString();
+                int id = i + 1;
                 int randAge = r.Next(18, 30);
                 string randName = GenRandomLastName();
                 string randGender = GetRandomGender();
-                
+
                 listEmployee.Add(new Employee(id, randName, randAge, randGender));
+                // Define a query
+                var listStr = "INSERT INTO employees (name, age, gender) VALUES ('" + randName + "'," + randAge + ",'" + randGender + "')";
+                //if(str == "")
+                //{
+                //    str = string.Concat(str, " " + listStr);
+                //} else
+                //{
+                //    str = string.Concat(str, ",('" + randName + "', " + randAge + ", '" + randGender + "')");
+                //}
+
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.CommandText = listStr;
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Execute a query
             }
-            listEmployee.ForEach((item) => {
+
+            string sql = "SELECT * FROM employees";
+            var cmd1 = new NpgsqlCommand(sql, conn);
+
+            NpgsqlDataReader rdr = cmd1.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                Console.WriteLine("{0}\t{1}\t{2}\t{3}", rdr[0], rdr[1],
+                        rdr[2], rdr[3]);
+            }
+            conn.Close();
+
+            listEmployee.ForEach((item) =>
+            {
                 saveListEmployee.Add(item);
             });
             int option;
@@ -381,13 +405,13 @@ namespace ListGenerateApp
                 Console.WriteLine("3 - Order list by Age");
                 Console.WriteLine("4 - Filter list only Male");
                 Console.WriteLine("5 - Filter list only Female");
-                Console.WriteLine("Press any key to exit menu!");
+                Console.WriteLine("Enter 0 to stop program!");
                 option = int.Parse(Console.ReadLine());
-                if (option >= 6)
+                if (option == 0)
                 {
                     System.Environment.Exit(1);
                 }
-                else 
+                else
                 {
                     switch (option)
                     {
@@ -409,7 +433,8 @@ namespace ListGenerateApp
                             }
                             break;
                         case (3):
-                            saveListEmployee.Sort((em1, em2) => {
+                            saveListEmployee.Sort((em1, em2) =>
+                            {
                                 if (em1.Age > em2.Age)
                                     return 1;
                                 else if (em1.Age == em2.Age)
