@@ -341,60 +341,34 @@ namespace ListGenerateApp
                                     "Password=apzon123;Database=Duc_Database;");
             conn.Open();
 
-            // Close connection
-            conn.Close();
-
             List<Employee> listEmployee = new List<Employee>();
+            List<Employee> dbListEmployee = new List<Employee>();
             List<Employee> saveListEmployee = new List<Employee>();
-            Console.WriteLine("Enter quantity of employees to save to Database: ");
-            int numberSave = int.Parse(Console.ReadLine());
 
-            conn.Open();
-            for (int i = 0; i < numberSave; i++)
-            {
-                Random r = new Random();
-                int id = i + 1;
-                int randAge = r.Next(18, 30);
-                string randName = GenRandomLastName();
-                string randGender = GetRandomGender();
-
-                listEmployee.Add(new Employee(id, randName, randAge, randGender));
-                // Define a query
-                var listStr = "INSERT INTO employees (name, age, gender) VALUES ('" + randName + "'," + randAge + ",'" + randGender + "')";
-                //if(str == "")
-                //{
-                //    str = string.Concat(str, " " + listStr);
-                //} else
-                //{
-                //    str = string.Concat(str, ",('" + randName + "', " + randAge + ", '" + randGender + "')");
-                //}
-
-                using (var cmd = new NpgsqlCommand())
-                {
-                    cmd.Connection = conn;
-                    cmd.CommandText = listStr;
-                    cmd.ExecuteNonQuery();
-                }
-
-                // Execute a query
-            }
-
-            string sql = "SELECT * FROM employees";
+                string sql = "SELECT * FROM employees";
             var cmd1 = new NpgsqlCommand(sql, conn);
 
             NpgsqlDataReader rdr = cmd1.ExecuteReader();
+            Console.WriteLine("Loading data from database");
 
             while (rdr.Read())
             {
-                Console.WriteLine("{0}\t{1}\t{2}\t{3}", rdr[0], rdr[1],
-                        rdr[2], rdr[3]);
+                int id = Convert.ToInt32(rdr["id"]);
+                string name = rdr["name"].ToString();
+                int age = Convert.ToInt32(rdr["age"]);
+                string gender = rdr["gender"].ToString();
+                dbListEmployee.Add(new Employee(id, name, age, gender));
+                //listEmployee.Add(new Employee(rdr["id"], rdr["name"], rdr["age"], rdr["gender"]));
             }
+
             conn.Close();
 
-            listEmployee.ForEach((item) =>
+            foreach (var employee in dbListEmployee)
             {
-                saveListEmployee.Add(item);
-            });
+                Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+            }
+
+
             int option;
             do
             {
@@ -405,10 +379,29 @@ namespace ListGenerateApp
                 Console.WriteLine("3 - Order list by Age");
                 Console.WriteLine("4 - Filter list only Male");
                 Console.WriteLine("5 - Filter list only Female");
+                Console.WriteLine("6 - Add new employees");
                 Console.WriteLine("Enter 0 to stop program!");
                 option = int.Parse(Console.ReadLine());
                 if (option == 0)
                 {
+                    conn.Open();
+                    foreach (var em in dbListEmployee)
+                    {
+                        //listEmployee.Add(new Employee(id, randName, randAge, randGender));
+                        // Define a query
+                        var listStr = "UPDATE employees SET name = '" + em.name +"', age = '" + em.age + "', gender = '" + em.gender + "' WHERE id =" + em.id;
+
+                        // Execute a query
+                        using (var cmd = new NpgsqlCommand())
+                        {
+                            cmd.Connection = conn;
+                            cmd.CommandText = listStr;
+                            cmd.ExecuteNonQuery();
+                            Console.WriteLine(cmd);
+                        }
+                    }
+
+                    conn.Close();
                     System.Environment.Exit(1);
                 }
                 else
@@ -418,7 +411,7 @@ namespace ListGenerateApp
                         case (1):
                             Console.WriteLine("Enter keyword");
                             string text = Console.ReadLine().ToLower();
-                            List<Employee> filterList = saveListEmployee.FindAll(employee => employee.Name.ToLower().IndexOf(text.ToLower()) != -1);
+                            List<Employee> filterList = dbListEmployee.FindAll(employee => employee.Name.ToLower().IndexOf(text.ToLower()) != -1);
                             if (filterList.Count > 0)
                                 foreach (var employee in filterList)
                                 {
@@ -426,14 +419,14 @@ namespace ListGenerateApp
                                 }
                             break;
                         case (2):
-                            saveListEmployee.Sort((e1, e2) => e1.Name.CompareTo(e2.Name));
-                            foreach (var employee in saveListEmployee)
+                            dbListEmployee.Sort((e1, e2) => e1.Name.CompareTo(e2.Name));
+                            foreach (var employee in dbListEmployee)
                             {
                                 Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
                             }
                             break;
                         case (3):
-                            saveListEmployee.Sort((em1, em2) =>
+                            dbListEmployee.Sort((em1, em2) =>
                             {
                                 if (em1.Age > em2.Age)
                                     return 1;
@@ -441,30 +434,85 @@ namespace ListGenerateApp
                                     return 0;
                                 return -1;
                             });
-                            foreach (var employee in saveListEmployee)
+                            foreach (var employee in dbListEmployee)
                             {
                                 Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
                             }
                             break;
                         case (4):
-                            List<Employee> filterMaleList = saveListEmployee.FindAll(employee => employee.Gender.ToLower() == "Male".ToLower());
+                            List<Employee> filterMaleList = dbListEmployee.FindAll(employee => employee.Gender.ToLower() == "Male".ToLower());
                             foreach (var employee in filterMaleList)
                             {
                                 Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
                             }
                             break;
                         case (5):
-                            List<Employee> filterFemaleList = saveListEmployee.FindAll(employee => employee.Gender.ToLower() == "Female".ToLower());
+                            List<Employee> filterFemaleList = dbListEmployee.FindAll(employee => employee.Gender.ToLower() == "Female".ToLower());
                             foreach (var employee in filterFemaleList)
                             {
                                 Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
                             }
                             break;
+                        case (6):
+                            conn.Open();
+                            Console.WriteLine("Enter quantity of employees to save to Database: ");
+                            int numberSave = int.Parse(Console.ReadLine());
+
+                            for (int i = 0; i < numberSave; i++)
+                            {
+                                Random r = new Random();
+                                int id = i + 1;
+                                int randAge = r.Next(18, 30);
+                                string randName = GenRandomLastName();
+                                string randGender = GetRandomGender();
+
+                                //listEmployee.Add(new Employee(id, randName, randAge, randGender));
+                                // Define a query
+                                var listStr = "INSERT INTO employees (name, age, gender) VALUES ('" + randName + "'," + randAge + ",'" + randGender + "')";
+
+                                // Execute a query
+                                using (var cmd = new NpgsqlCommand())
+                                {
+                                    cmd.Connection = conn;
+                                    cmd.CommandText = listStr;
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+                            dbListEmployee.Clear();
+
+                            NpgsqlDataReader dr = cmd1.ExecuteReader();
+
+                            while (dr.Read())
+                            {
+                                int id = Convert.ToInt32(dr["id"]);
+                                string name = dr["name"].ToString();
+                                int age = Convert.ToInt32(dr["age"]);
+                                string gender = dr["gender"].ToString();
+                                dbListEmployee.Add(new Employee(id, name, age, gender));
+                            }
+
+                            Console.WriteLine("Update database");
+                            foreach (var employee in dbListEmployee)
+                            {
+                                Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+                            }
+
+                            conn.Close();
+
+                            break;
                         default:
                             break;
                     }
                 }
-            } while (option < 5);
+            } while (option < 7);
+
+            //conn.Close();
+
+            listEmployee.ForEach((item) =>
+            {
+                saveListEmployee.Add(item);
+            });
+            
         }
     }
 }
