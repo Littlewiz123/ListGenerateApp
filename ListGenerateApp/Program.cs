@@ -336,14 +336,62 @@ namespace ListGenerateApp
 
         static void Main(string[] args)
         {
+            List<Employee> dbListEmployee = new List<Employee>();
             // Specify connection options and open an connection
             NpgsqlConnection conn = new NpgsqlConnection("Server=172.16.8.20;User Id=POSMAN;" +
                                     "Password=apzon123;Database=Duc_Database;");
             conn.Open();
 
+            Console.WriteLine("Checking Database...");
+
+            NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM employees", conn);
+
+            // Execute the query and obtain a result set
+            NpgsqlDataReader dr = command.ExecuteReader();
+
+            // Output rows
+            while (dr.Read())
+            {
+                int id = Convert.ToInt32(dr["id"]);
+                string name = dr["name"].ToString();
+                int age = Convert.ToInt32(dr["age"]);
+                string gender = dr["gender"].ToString();
+                dbListEmployee.Add(new Employee(id, name, age, gender));
+            }
+
+            if(dbListEmployee.Count < 1000)
+            {
+                //Genarate 1000 Employees in Database
+                for (int i = 0; i < 1000; i++)
+                {
+                    Random r = new Random();
+                    int id = i + 1;
+                    int randAge = r.Next(18, 30);
+                    string randName = GenRandomLastName();
+                    string randGender = GetRandomGender();
+
+                    //listEmployee.Add(new Employee(id, randName, randAge, randGender));
+                    // Define a query
+                    var listStr = "INSERT INTO employees (name, age, gender) VALUES ('" + randName + "'," + randAge + ",'" + randGender + "')";
+
+                    // Execute a query
+                    using (var cmd = new NpgsqlCommand())
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = listStr;
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+
+            conn.Close();
+
             List<Employee> listEmployee = new List<Employee>();
-            List<Employee> dbListEmployee = new List<Employee>();
             List<Employee> saveListEmployee = new List<Employee>();
+
+            conn.Open();
+
+            dbListEmployee.Clear();
 
                 string sql = "SELECT * FROM employees";
             var cmd1 = new NpgsqlCommand(sql, conn);
@@ -380,7 +428,7 @@ namespace ListGenerateApp
                 Console.WriteLine("4 - Filter list only Male");
                 Console.WriteLine("5 - Filter list only Female");
                 Console.WriteLine("6 - Add new employees");
-                Console.WriteLine("Enter 0 to stop program!");
+                Console.WriteLine("Enter 0 to save and stop program!");
                 option = int.Parse(Console.ReadLine());
                 if (option == 0)
                 {
@@ -397,8 +445,8 @@ namespace ListGenerateApp
                             cmd.Connection = conn;
                             cmd.CommandText = listStr;
                             cmd.ExecuteNonQuery();
-                            Console.WriteLine(cmd);
                         }
+                        Console.WriteLine("Saving...!");
                     }
 
                     conn.Close();
@@ -480,14 +528,14 @@ namespace ListGenerateApp
                             }
                             dbListEmployee.Clear();
 
-                            NpgsqlDataReader dr = cmd1.ExecuteReader();
+                            NpgsqlDataReader dr1 = cmd1.ExecuteReader();
 
-                            while (dr.Read())
+                            while (dr1.Read())
                             {
                                 int id = Convert.ToInt32(dr["id"]);
-                                string name = dr["name"].ToString();
-                                int age = Convert.ToInt32(dr["age"]);
-                                string gender = dr["gender"].ToString();
+                                string name = dr1["name"].ToString();
+                                int age = Convert.ToInt32(dr1["age"]);
+                                string gender = dr1["gender"].ToString();
                                 dbListEmployee.Add(new Employee(id, name, age, gender));
                             }
 
