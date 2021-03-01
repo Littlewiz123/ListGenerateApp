@@ -6,6 +6,12 @@ namespace ListGenerateApp
 {
     class Program
     {
+        public static List<Employee> Compare()
+        {
+            List<Employee> lst = new List<Employee>();
+            return lst;
+        }
+
         public static string GenRandomLastName()
         {
             List<string> lst = new List<string>();
@@ -114,215 +120,222 @@ namespace ListGenerateApp
             return lst[rnd.Next(0, lst.Count)];
         }
 
-        public static string GenRandomFirstName()
+        public static string GenRandomFirstName(string gender)
         {
-            List<string> lst = new List<string>();
+            List<string> maleFirstName = new List<string>();
             string str = string.Empty;
-            lst.Add("Aiden");
-            lst.Add("Jackson");
-            lst.Add("Mason");
-            lst.Add("Liam");
-            lst.Add("Jacob");
-            lst.Add("Jayden");
-            lst.Add("Ethan");
-            lst.Add("Noah");
-            lst.Add("Lucas");
-            lst.Add("Logan");
-            lst.Add("Caleb");
-            lst.Add("Caden");
-            lst.Add("Jack");
-            lst.Add("Ryan");
-            lst.Add("Connor");
-            lst.Add("Michael");
-            lst.Add("Elijah");
-            lst.Add("Brayden");
-            lst.Add("Benjamin");
-            lst.Add("Nicholas");
-            lst.Add("Alexander");
-            lst.Add("William");
-            lst.Add("Matthew");
-            lst.Add("James");
-            lst.Add("Landon");
-            lst.Add("Nathan");
-            lst.Add("Dylan");
-            lst.Add("Evan");
-            lst.Add("Luke");
-            lst.Add("Andrew");
-            lst.Add("Gabriel");
-            lst.Add("Gavin");
-            lst.Add("Joshua");
-            lst.Add("Owen");
-            lst.Add("Daniel");
-            lst.Add("Carter");
-            lst.Add("Tyler");
-            lst.Add("Cameron");
-            lst.Add("Christian");
-            lst.Add("Wyatt");
-            lst.Add("Henry");
-            lst.Add("Eli");
-            lst.Add("Joseph");
-            lst.Add("Max");
-            lst.Add("Isaac");
-            lst.Add("Samuel");
-            lst.Add("Anthony");
-            lst.Add("Grayson");
-            lst.Add("Zachary");
-            lst.Add("David");
-            lst.Add("Christopher");
-            lst.Add("John");
-            lst.Add("Isaiah");
-            lst.Add("Levi");
-            lst.Add("Jonathan");
-            lst.Add("Oliver");
-            lst.Add("Chase");
-            lst.Add("Cooper");
-            lst.Add("Tristan");
-            lst.Add("Colton");
-            lst.Add("Austin");
-            lst.Add("Colin");
-            lst.Add("Charlie");
-            lst.Add("Dominic");
-            lst.Add("Parker");
-            lst.Add("Hunter");
-            lst.Add("Thomas");
-            lst.Add("Alex");
-            lst.Add("Ian");
-            lst.Add("Jordan");
-            lst.Add("Cole");
-            lst.Add("Julian");
-            lst.Add("Aaron");
-            lst.Add("Carson");
-            lst.Add("Miles");
-            lst.Add("Blake");
-            lst.Add("Brody");
-            lst.Add("Adam");
-            lst.Add("Sebastian");
-            lst.Add("Adrian");
-            lst.Add("Nolan");
-            lst.Add("Sean");
-            lst.Add("Riley");
-            lst.Add("Bentley");
-            lst.Add("Xavier");
-            lst.Add("Hayden");
-            lst.Add("Jeremiah");
-            lst.Add("Jason");
-            lst.Add("Jake");
-            lst.Add("Asher");
-            lst.Add("Micah");
-            lst.Add("Jace");
-            lst.Add("Brandon");
-            lst.Add("Josiah");
-            lst.Add("Hudson");
-            lst.Add("Nathaniel");
-            lst.Add("Bryson");
-            lst.Add("Ryder");
-            lst.Add("Justin");
-            lst.Add("Bryce");
+            maleFirstName.Add("Aiden");
+            maleFirstName.Add("Jackson");
+            maleFirstName.Add("Mason");
+            maleFirstName.Add("Liam");
+            maleFirstName.Add("Jacob");
+            maleFirstName.Add("Jayden");
+            maleFirstName.Add("Ethan");
+            maleFirstName.Add("Noah");
+            maleFirstName.Add("Lucas");
+            maleFirstName.Add("Logan");
+            maleFirstName.Add("Caleb");
+            maleFirstName.Add("Caden");
+            maleFirstName.Add("Jack");
+            maleFirstName.Add("Ryan");
+            maleFirstName.Add("Connor");
+            maleFirstName.Add("Michael");
+            maleFirstName.Add("Elijah");
+            maleFirstName.Add("Brayden");
+            maleFirstName.Add("Benjamin");
+            maleFirstName.Add("Nicholas");
+            maleFirstName.Add("Alexander");
+            maleFirstName.Add("William");
+            maleFirstName.Add("Matthew");
+            maleFirstName.Add("James");
+            maleFirstName.Add("Landon");
+            maleFirstName.Add("Nathan");
+            maleFirstName.Add("Dylan");
+            maleFirstName.Add("Evan");
+            maleFirstName.Add("Luke");
+            maleFirstName.Add("Andrew");
+            maleFirstName.Add("Gabriel");
+            maleFirstName.Add("Gavin");
+            maleFirstName.Add("Joshua");
+            maleFirstName.Add("Owen");
+            maleFirstName.Add("Daniel");
+            maleFirstName.Add("Carter");
+            maleFirstName.Add("Tyler");
+            maleFirstName.Add("Cameron");
+            maleFirstName.Add("Christian");
+            maleFirstName.Add("Wyatt");
+            maleFirstName.Add("Henry");
+            maleFirstName.Add("Eli");
+            maleFirstName.Add("Joseph");
+            maleFirstName.Add("Max");
+            maleFirstName.Add("Isaac");
+            maleFirstName.Add("Samuel");
+            maleFirstName.Add("Anthony");
+            maleFirstName.Add("Grayson");
+            maleFirstName.Add("Zachary");
+            maleFirstName.Add("David");
+            maleFirstName.Add("Christopher");
+            maleFirstName.Add("John");
+            maleFirstName.Add("Isaiah");
+            maleFirstName.Add("Levi");
+            maleFirstName.Add("Jonathan");
+            maleFirstName.Add("Oliver");
+            maleFirstName.Add("Chase");
+            maleFirstName.Add("Cooper");
+            maleFirstName.Add("Tristan");
+            maleFirstName.Add("Colton");
+            maleFirstName.Add("Austin");
+            maleFirstName.Add("Colin");
+            maleFirstName.Add("Charlie");
+            maleFirstName.Add("Dominic");
+            maleFirstName.Add("Parker");
+            maleFirstName.Add("Hunter");
+            maleFirstName.Add("Thomas");
+            maleFirstName.Add("Alex");
+            maleFirstName.Add("Ian");
+            maleFirstName.Add("Jordan");
+            maleFirstName.Add("Cole");
+            maleFirstName.Add("Julian");
+            maleFirstName.Add("Aaron");
+            maleFirstName.Add("Carson");
+            maleFirstName.Add("Miles");
+            maleFirstName.Add("Blake");
+            maleFirstName.Add("Brody");
+            maleFirstName.Add("Adam");
+            maleFirstName.Add("Sebastian");
+            maleFirstName.Add("Adrian");
+            maleFirstName.Add("Nolan");
+            maleFirstName.Add("Sean");
+            maleFirstName.Add("Riley");
+            maleFirstName.Add("Bentley");
+            maleFirstName.Add("Xavier");
+            maleFirstName.Add("Hayden");
+            maleFirstName.Add("Jeremiah");
+            maleFirstName.Add("Jason");
+            maleFirstName.Add("Jake");
+            maleFirstName.Add("Asher");
+            maleFirstName.Add("Micah");
+            maleFirstName.Add("Jace");
+            maleFirstName.Add("Brandon");
+            maleFirstName.Add("Josiah");
+            maleFirstName.Add("Hudson");
+            maleFirstName.Add("Nathaniel");
+            maleFirstName.Add("Bryson");
+            maleFirstName.Add("Ryder");
+            maleFirstName.Add("Justin");
+            maleFirstName.Add("Bryce");
 
             //—————female
-
-            lst.Add("Sophia");
-            lst.Add("Emma");
-            lst.Add("Isabella");
-            lst.Add("Olivia");
-            lst.Add("Ava");
-            lst.Add("Lily");
-            lst.Add("Chloe");
-            lst.Add("Madison");
-            lst.Add("Emily");
-            lst.Add("Abigail");
-            lst.Add("Addison");
-            lst.Add("Mia");
-            lst.Add("Madelyn");
-            lst.Add("Ella");
-            lst.Add("Hailey");
-            lst.Add("Kaylee");
-            lst.Add("Avery");
-            lst.Add("Kaitlyn");
-            lst.Add("Riley");
-            lst.Add("Aubrey");
-            lst.Add("Brooklyn");
-            lst.Add("Peyton");
-            lst.Add("Layla");
-            lst.Add("Hannah");
-            lst.Add("Charlotte");
-            lst.Add("Bella");
-            lst.Add("Natalie");
-            lst.Add("Sarah");
-            lst.Add("Grace");
-            lst.Add("Amelia");
-            lst.Add("Kylie");
-            lst.Add("Arianna");
-            lst.Add("Anna");
-            lst.Add("Elizabeth");
-            lst.Add("Sophie");
-            lst.Add("Claire");
-            lst.Add("Lila");
-            lst.Add("Aaliyah");
-            lst.Add("Gabriella");
-            lst.Add("Elise");
-            lst.Add("Lillian");
-            lst.Add("Samantha");
-            lst.Add("Makayla");
-            lst.Add("Audrey");
-            lst.Add("Alyssa");
-            lst.Add("Ellie");
-            lst.Add("Alexis");
-            lst.Add("Isabelle");
-            lst.Add("Savannah");
-            lst.Add("Evelyn");
-            lst.Add("Leah");
-            lst.Add("Keira");
-            lst.Add("Allison");
-            lst.Add("Maya");
-            lst.Add("Lucy");
-            lst.Add("Sydney");
-            lst.Add("Taylor");
-            lst.Add("Molly");
-            lst.Add("Lauren");
-            lst.Add("Harper");
-            lst.Add("Scarlett");
-            lst.Add("Brianna");
-            lst.Add("Victoria");
-            lst.Add("Liliana");
-            lst.Add("Aria");
-            lst.Add("Kayla");
-            lst.Add("Annabelle");
-            lst.Add("Gianna");
-            lst.Add("Kennedy");
-            lst.Add("Stella");
-            lst.Add("Reagan");
-            lst.Add("Julia");
-            lst.Add("Bailey");
-            lst.Add("Alexandra");
-            lst.Add("Jordyn");
-            lst.Add("Nora");
-            lst.Add("Carolin");
-            lst.Add("Mackenzie");
-            lst.Add("Jasmine");
-            lst.Add("Jocelyn");
-            lst.Add("Kendall");
-            lst.Add("Morgan");
-            lst.Add("Nevaeh");
-            lst.Add("Maria");
-            lst.Add("Eva");
-            lst.Add("Juliana");
-            lst.Add("Abby");
-            lst.Add("Alexa");
-            lst.Add("Summer");
-            lst.Add("Brooke");
-            lst.Add("Penelope");
-            lst.Add("Violet");
-            lst.Add("Kate");
-            lst.Add("Hadley");
-            lst.Add("Ashlyn");
-            lst.Add("Sadie");
-            lst.Add("Paige");
-            lst.Add("Katherine");
-            lst.Add("Sienna");
-            lst.Add("Piper");
+            List<string> femaleFirstName = new List<string>();
+            femaleFirstName.Add("Sophia");
+            femaleFirstName.Add("Emma");
+            femaleFirstName.Add("Isabella");
+            femaleFirstName.Add("Olivia");
+            femaleFirstName.Add("Ava");
+            femaleFirstName.Add("Lily");
+            femaleFirstName.Add("Chloe");
+            femaleFirstName.Add("Madison");
+            femaleFirstName.Add("Emily");
+            femaleFirstName.Add("Abigail");
+            femaleFirstName.Add("Addison");
+            femaleFirstName.Add("Mia");
+            femaleFirstName.Add("Madelyn");
+            femaleFirstName.Add("Ella");
+            femaleFirstName.Add("Hailey");
+            femaleFirstName.Add("Kaylee");
+            femaleFirstName.Add("Avery");
+            femaleFirstName.Add("Kaitlyn");
+            femaleFirstName.Add("Riley");
+            femaleFirstName.Add("Aubrey");
+            femaleFirstName.Add("Brooklyn");
+            femaleFirstName.Add("Peyton");
+            femaleFirstName.Add("Layla");
+            femaleFirstName.Add("Hannah");
+            femaleFirstName.Add("Charlotte");
+            femaleFirstName.Add("Bella");
+            femaleFirstName.Add("Natalie");
+            femaleFirstName.Add("Sarah");
+            femaleFirstName.Add("Grace");
+            femaleFirstName.Add("Amelia");
+            femaleFirstName.Add("Kylie");
+            femaleFirstName.Add("Arianna");
+            femaleFirstName.Add("Anna");
+            femaleFirstName.Add("Elizabeth");
+            femaleFirstName.Add("Sophie");
+            femaleFirstName.Add("Claire");
+            femaleFirstName.Add("Lila");
+            femaleFirstName.Add("Aaliyah");
+            femaleFirstName.Add("Gabriella");
+            femaleFirstName.Add("Elise");
+            femaleFirstName.Add("Lillian");
+            femaleFirstName.Add("Samantha");
+            femaleFirstName.Add("Makayla");
+            femaleFirstName.Add("Audrey");
+            femaleFirstName.Add("Alyssa");
+            femaleFirstName.Add("Ellie");
+            femaleFirstName.Add("Alexis");
+            femaleFirstName.Add("Isabelle");
+            femaleFirstName.Add("Savannah");
+            femaleFirstName.Add("Evelyn");
+            femaleFirstName.Add("Leah");
+            femaleFirstName.Add("Keira");
+            femaleFirstName.Add("Allison");
+            femaleFirstName.Add("Maya");
+            femaleFirstName.Add("Lucy");
+            femaleFirstName.Add("Sydney");
+            femaleFirstName.Add("Taylor");
+            femaleFirstName.Add("Molly");
+            femaleFirstName.Add("Lauren");
+            femaleFirstName.Add("Harper");
+            femaleFirstName.Add("Scarlett");
+            femaleFirstName.Add("Brianna");
+            femaleFirstName.Add("Victoria");
+            femaleFirstName.Add("Liliana");
+            femaleFirstName.Add("Aria");
+            femaleFirstName.Add("Kayla");
+            femaleFirstName.Add("Annabelle");
+            femaleFirstName.Add("Gianna");
+            femaleFirstName.Add("Kennedy");
+            femaleFirstName.Add("Stella");
+            femaleFirstName.Add("Reagan");
+            femaleFirstName.Add("Julia");
+            femaleFirstName.Add("Bailey");
+            femaleFirstName.Add("Alexandra");
+            femaleFirstName.Add("Jordyn");
+            femaleFirstName.Add("Nora");
+            femaleFirstName.Add("Carolin");
+            femaleFirstName.Add("Mackenzie");
+            femaleFirstName.Add("Jasmine");
+            femaleFirstName.Add("Jocelyn");
+            femaleFirstName.Add("Kendall");
+            femaleFirstName.Add("Morgan");
+            femaleFirstName.Add("Nevaeh");
+            femaleFirstName.Add("Maria");
+            femaleFirstName.Add("Eva");
+            femaleFirstName.Add("Juliana");
+            femaleFirstName.Add("Abby");
+            femaleFirstName.Add("Alexa");
+            femaleFirstName.Add("Summer");
+            femaleFirstName.Add("Brooke");
+            femaleFirstName.Add("Penelope");
+            femaleFirstName.Add("Violet");
+            femaleFirstName.Add("Kate");
+            femaleFirstName.Add("Hadley");
+            femaleFirstName.Add("Ashlyn");
+            femaleFirstName.Add("Sadie");
+            femaleFirstName.Add("Paige");
+            femaleFirstName.Add("Katherine");
+            femaleFirstName.Add("Sienna");
+            femaleFirstName.Add("Piper");
             Random rnd = new Random();
-            return lst[rnd.Next(0, lst.Count)];
+            if (gender == "Male")
+            {
+                return maleFirstName[rnd.Next(0, maleFirstName.Count)];
+            }
+            else
+            {
+                return femaleFirstName[rnd.Next(0, femaleFirstName.Count)];
+            }
         }
 
         static string GetRandomGender()
@@ -356,10 +369,13 @@ namespace ListGenerateApp
                 string name = dr["name"].ToString();
                 int age = Convert.ToInt32(dr["age"]);
                 string gender = dr["gender"].ToString();
-                dbListEmployee.Add(new Employee(id, name, age, gender));
+                string fatherId = dr["fatherId"].ToString() != null ? dr["fatherId"].ToString() : null;
+                dbListEmployee.Add(new Employee() { UId = id, Name = name, Age = age, FatherId = fatherId, Gender = gender });
             }
 
-            if(dbListEmployee.Count < 1000)
+            dr.Close();
+
+            if (dbListEmployee.Count >= 0 && dbListEmployee.Count < 1000)
             {
                 //Genarate 1000 Employees in Database
                 for (int i = 0; i < 1000; i++)
@@ -367,8 +383,8 @@ namespace ListGenerateApp
                     Random r = new Random();
                     int id = i + 1;
                     int randAge = r.Next(18, 30);
-                    string randName = GenRandomLastName();
                     string randGender = GetRandomGender();
+                    string randName = GenRandomFirstName(randGender) + " " + GenRandomLastName();
 
                     //listEmployee.Add(new Employee(id, randName, randAge, randGender));
                     // Define a query
@@ -384,16 +400,12 @@ namespace ListGenerateApp
                 }
             }
 
-            conn.Close();
-
             List<Employee> listEmployee = new List<Employee>();
             List<Employee> saveListEmployee = new List<Employee>();
 
-            conn.Open();
-
             dbListEmployee.Clear();
 
-                string sql = "SELECT * FROM employees";
+            string sql = "SELECT * FROM employees";
             var cmd1 = new NpgsqlCommand(sql, conn);
 
             NpgsqlDataReader rdr = cmd1.ExecuteReader();
@@ -405,15 +417,15 @@ namespace ListGenerateApp
                 string name = rdr["name"].ToString();
                 int age = Convert.ToInt32(rdr["age"]);
                 string gender = rdr["gender"].ToString();
-                dbListEmployee.Add(new Employee(id, name, age, gender));
-                //listEmployee.Add(new Employee(rdr["id"], rdr["name"], rdr["age"], rdr["gender"]));
+                string fatherId = rdr["fatherId"].ToString();
+                dbListEmployee.Add(new Employee() { UId = id, Name = name, Age = age, FatherId = fatherId, Gender = gender });
             }
 
-            conn.Close();
+            rdr.Close();
 
             foreach (var employee in dbListEmployee)
             {
-                Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+                Console.WriteLine(employee.UId + " " + employee.Name + " " + employee.Age + " " + employee.Gender + " " + employee.FatherId);
             }
 
 
@@ -428,16 +440,16 @@ namespace ListGenerateApp
                 Console.WriteLine("4 - Filter list only Male");
                 Console.WriteLine("5 - Filter list only Female");
                 Console.WriteLine("6 - Add new employees");
-                Console.WriteLine("Enter 0 to save and stop program!");
+                Console.WriteLine("7 - Find family tree");
+                Console.WriteLine("Enter 0 to save and end program!");
                 option = int.Parse(Console.ReadLine());
                 if (option == 0)
                 {
-                    conn.Open();
+                    Console.WriteLine("Saving...!");
                     foreach (var em in dbListEmployee)
                     {
-                        //listEmployee.Add(new Employee(id, randName, randAge, randGender));
                         // Define a query
-                        var listStr = "UPDATE employees SET name = '" + em.name +"', age = '" + em.age + "', gender = '" + em.gender + "' WHERE id =" + em.id;
+                        var listStr = "UPDATE employees SET name = '" + em.Name + "', age = '" + em.Age + "', gender = '" + em.Gender + "' WHERE id =" + em.UId;
 
                         // Execute a query
                         using (var cmd = new NpgsqlCommand())
@@ -446,7 +458,6 @@ namespace ListGenerateApp
                             cmd.CommandText = listStr;
                             cmd.ExecuteNonQuery();
                         }
-                        Console.WriteLine("Saving...!");
                     }
 
                     conn.Close();
@@ -458,51 +469,91 @@ namespace ListGenerateApp
                     {
                         case (1):
                             Console.WriteLine("Enter keyword");
-                            string text = Console.ReadLine().ToLower();
-                            List<Employee> filterList = dbListEmployee.FindAll(employee => employee.Name.ToLower().IndexOf(text.ToLower()) != -1);
+                            string keyword = Console.ReadLine().ToLower();
+                            List<Employee> filterList = new List<Employee>();
+                            for (int i = 0; i < dbListEmployee.Count; i++)
+                            {
+                                if (dbListEmployee[i].Name.ToLower().IndexOf(keyword) != -1)
+                                {
+                                    Console.WriteLine(dbListEmployee[i].Name);
+                                    filterList.Add(new Employee() { UId = dbListEmployee[i].UId, Name = dbListEmployee[i].Name, Age = dbListEmployee[i].Age, FatherId = dbListEmployee[i].FatherId, Gender = dbListEmployee[i].Gender });
+                                }
+                            }
                             if (filterList.Count > 0)
                                 foreach (var employee in filterList)
                                 {
-                                    Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+                                    Console.WriteLine(employee.UId + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
                                 }
+                            else
+                            {
+                                Console.WriteLine("No Result Found!");
+                            }
                             break;
                         case (2):
-                            dbListEmployee.Sort((e1, e2) => e1.Name.CompareTo(e2.Name));
-                            foreach (var employee in dbListEmployee)
+                            for (int i = 0; i < dbListEmployee.Count; i++) //Compare Name method
                             {
-                                Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+                                for (int j = 0; j < dbListEmployee.Count - 1; j++)
+                                {
+                                    if (dbListEmployee[j].Name.CompareTo(dbListEmployee[j + 1].Name) > 0)
+                                    {
+                                        var temp = dbListEmployee[j];
+                                        dbListEmployee[j] = dbListEmployee[j + 1];
+                                        dbListEmployee[j + 1] = temp;
+                                    }
+                                }
                             }
+                            dbListEmployee.ForEach((item) =>
+                            {
+                                Console.WriteLine(item.UId + " " + item.Name + " " + item.Age + " " + item.Gender);
+                            });
                             break;
                         case (3):
-                            dbListEmployee.Sort((em1, em2) =>
+                            for (int i = 0; i < dbListEmployee.Count; i++) //Compare Age method 
                             {
-                                if (em1.Age > em2.Age)
-                                    return 1;
-                                else if (em1.Age == em2.Age)
-                                    return 0;
-                                return -1;
-                            });
-                            foreach (var employee in dbListEmployee)
-                            {
-                                Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+                                for (int j = 0; j < dbListEmployee.Count - 1; j++)
+                                {
+                                    if (dbListEmployee[j].Age.CompareTo(dbListEmployee[j + 1].Age) > 0)
+                                    {
+                                        var temp = dbListEmployee[j];
+                                        dbListEmployee[j] = dbListEmployee[j + 1];
+                                        dbListEmployee[j + 1] = temp;
+                                    }
+                                }
                             }
+                            dbListEmployee.ForEach((item) =>
+                            {
+                                Console.WriteLine(item.UId + " " + item.Name + " " + item.Age + " " + item.Gender + " " + item.FatherId);
+                            });
                             break;
                         case (4):
-                            List<Employee> filterMaleList = dbListEmployee.FindAll(employee => employee.Gender.ToLower() == "Male".ToLower());
-                            foreach (var employee in filterMaleList)
+                            List<Employee> filterMaleList = new List<Employee>();
+                            for (int i = 0; i < dbListEmployee.Count; i++)
                             {
-                                Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+                                if (dbListEmployee[i].Gender == "Male")
+                                {
+                                    filterMaleList.Add(new Employee() { UId = dbListEmployee[i].UId, Name = dbListEmployee[i].Name, Age = dbListEmployee[i].Age, Gender = dbListEmployee[i].Gender, FatherId = dbListEmployee[i].FatherId });
+                                }
                             }
+                            filterMaleList.ForEach((item) =>
+                            {
+                                Console.WriteLine(item.UId + " " + item.Name + " " + item.Age + " " + item.Gender + " " + item.FatherId);
+                            });
                             break;
                         case (5):
-                            List<Employee> filterFemaleList = dbListEmployee.FindAll(employee => employee.Gender.ToLower() == "Female".ToLower());
-                            foreach (var employee in filterFemaleList)
+                            List<Employee> filterFemaleList = new List<Employee>();
+                            for (int i = 0; i < dbListEmployee.Count; i++)
                             {
-                                Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+                                if (dbListEmployee[i].Gender == "Female")
+                                {
+                                    filterFemaleList.Add(new Employee() { UId = dbListEmployee[i].UId, Name = dbListEmployee[i].Name, Age = dbListEmployee[i].Age, Gender = dbListEmployee[i].Gender, FatherId = dbListEmployee[i].FatherId });
+                                }
                             }
+                            filterFemaleList.ForEach((item) =>
+                            {
+                                Console.WriteLine(item.UId + " " + item.Name + " " + item.Age + " " + item.Gender + " " + item.FatherId);
+                            });
                             break;
                         case (6):
-                            conn.Open();
                             Console.WriteLine("Enter quantity of employees to save to Database: ");
                             int numberSave = int.Parse(Console.ReadLine());
 
@@ -514,7 +565,6 @@ namespace ListGenerateApp
                                 string randName = GenRandomLastName();
                                 string randGender = GetRandomGender();
 
-                                //listEmployee.Add(new Employee(id, randName, randAge, randGender));
                                 // Define a query
                                 var listStr = "INSERT INTO employees (name, age, gender) VALUES ('" + randName + "'," + randAge + ",'" + randGender + "')";
 
@@ -532,35 +582,32 @@ namespace ListGenerateApp
 
                             while (dr1.Read())
                             {
-                                int id = Convert.ToInt32(dr["id"]);
+                                int id = Convert.ToInt32(dr1["id"]);
                                 string name = dr1["name"].ToString();
                                 int age = Convert.ToInt32(dr1["age"]);
                                 string gender = dr1["gender"].ToString();
-                                dbListEmployee.Add(new Employee(id, name, age, gender));
+                                string fatherId = dr1["fatherId"].ToString();
+                                dbListEmployee.Add(new Employee() { UId = id, Name = name, Age = age, FatherId = fatherId, Gender = gender });
                             }
 
                             Console.WriteLine("Update database");
                             foreach (var employee in dbListEmployee)
                             {
-                                Console.WriteLine(employee.Id + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
+                                Console.WriteLine(employee.UId + " " + employee.Name + " " + employee.Age + " " + employee.Gender);
                             }
 
-                            conn.Close();
+                            dr1.Close();
 
+                            break;
+                        case (7):
+                            var familyLastName = Console.ReadLine();
+                            Console.WriteLine(familyLastName);
                             break;
                         default:
                             break;
                     }
                 }
-            } while (option < 7);
-
-            //conn.Close();
-
-            listEmployee.ForEach((item) =>
-            {
-                saveListEmployee.Add(item);
-            });
-            
+            } while (option < 8);
         }
     }
 }
