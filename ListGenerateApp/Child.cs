@@ -4,12 +4,7 @@ using System.Text;
 
 namespace ListGenerateApp
 {
-    class Employee : Person
+    class Child : Person
     {
-        public int UId
-        {
-            get;
-            set;
-        }
     }
 }

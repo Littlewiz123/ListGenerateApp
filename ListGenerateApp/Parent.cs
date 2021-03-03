@@ -4,9 +4,9 @@ using System.Text;
 
 namespace ListGenerateApp
 {
-    class Employee : Person
+    class Parent : Person
     {
-        public int UId
+        public List<Person> Children
         {
             get;
             set;
