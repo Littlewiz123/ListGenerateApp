@@ -355,8 +355,8 @@ namespace ListGenerateApp
             // Specify connection options and open an connection
             //NpgsqlConnection conn = new NpgsqlConnection("Server=127.0.0.1;User Id=POSMAN;" +
             //                        "Password=apzon123;Database=Duc_Database;");
-            NpgsqlConnection conn = new NpgsqlConnection("Server=127.0.0.1;User Id=postgres;" +
-                                   "Password=123456;Database=Learn_.Net;");
+            NpgsqlConnection conn = new NpgsqlConnection("Server=172.16.8.20;User Id=POSMAN;" +
+                                    "Password=apzon123;Database=Duc_Database;");
             conn.Open();
 
             Console.WriteLine("Checking Database...");
@@ -391,7 +391,7 @@ namespace ListGenerateApp
                     string randName = GenRandomFirstName(randGender) + " " + GenRandomLastName();
                     string fatherId = "";
                     // Define a query
-                    var listStr = "INSERT INTO employees (name, age, gender, fatherid) VALUES ('" + randName + "'," + randAge + ",'" + randGender + "','" + fatherId + "')";
+                    var listStr = "INSERT INTO employees (name, age, gender, fatherId) VALUES ('" + randName + "'," + randAge + ",'" + randGender + "','" + fatherId + "')";
 
                     // Execute a query
                     using (var cmd = new NpgsqlCommand())
@@ -416,11 +416,11 @@ namespace ListGenerateApp
 
             while (rdr.Read())
             {
-                int id = Convert.ToInt32(rdr["uid"]);
+                int id = Convert.ToInt32(rdr["id"]);
                 string name = rdr["name"].ToString();
                 int age = Convert.ToInt32(rdr["age"]);
                 string gender = rdr["gender"].ToString();
-                string fatherId = rdr["fatherid"].ToString();
+                string fatherId = rdr["fatherId"].ToString();
                 if (age >= 40)
                 {
                     elderEmployee.Add(new Employee() { UId = id, Name = name, Age = age, FatherId = fatherId, Gender = gender, Children = new List<Person>() });
@@ -510,7 +510,7 @@ namespace ListGenerateApp
             {
                 if (em.FatherId != "")
                 {
-                    var listStr = "UPDATE employees SET fatherid = '" + em.FatherId + "' WHERE uid =" + em.UId;
+                    var listStr = "UPDATE employees SET fatherId = '" + em.FatherId + "' WHERE uid =" + em.UId;
 
                     // Execute a query
                     using (var cmd = new NpgsqlCommand())
@@ -532,11 +532,11 @@ namespace ListGenerateApp
 
             while (rdr1.Read())
             {
-                int id = Convert.ToInt32(rdr1["uid"]);
+                int id = Convert.ToInt32(rdr1["id"]);
                 string name = rdr1["name"].ToString();
                 int age = Convert.ToInt32(rdr1["age"]);
                 string gender = rdr1["gender"].ToString();
-                string fatherId = rdr1["fatherid"].ToString();
+                string fatherId = rdr1["fatherId"].ToString();
                 dbListEmployee.Add(new Employee() { UId = id, Name = name, Age = age, FatherId = fatherId, Gender = gender });
             }
 
@@ -592,7 +592,7 @@ namespace ListGenerateApp
                     foreach (var em in dbListEmployee)
                     {
                         // Define a query
-                        var listStr = "UPDATE employees SET name = '" + em.Name + "', age = '" + em.Age + "', gender = '" + em.Gender + "' WHERE uid =" + em.UId;
+                        var listStr = "UPDATE employees SET name = '" + em.Name + "', age = '" + em.Age + "', gender = '" + em.Gender + "' WHERE id =" + em.UId;
 
                         // Execute a query
                         using (var cmd = new NpgsqlCommand())
@@ -736,7 +736,7 @@ namespace ListGenerateApp
 
                             while (dr1.Read())
                             {
-                                int id = Convert.ToInt32(dr1["uid"]);
+                                int id = Convert.ToInt32(dr1["id"]);
                                 string name = dr1["name"].ToString();
                                 int age = Convert.ToInt32(dr1["age"]);
                                 string gender = dr1["gender"].ToString();
