@@ -373,7 +373,7 @@ namespace ListGenerateApp
                 string name = dr["name"].ToString();
                 int age = Convert.ToInt32(dr["age"]);
                 string gender = dr["gender"].ToString();
-                string fatherId = dr["fatherId"].ToString() != null ? dr["fatherId"].ToString() : null;
+                string fatherId = dr["fatherId"].ToString() != null ? dr["fatherId"].ToString() : "";
                 dbListEmployee.Add(new Employee() { UId = id, Name = name, Age = age, FatherId = fatherId, Gender = gender });
             }
 
@@ -423,7 +423,7 @@ namespace ListGenerateApp
                 string fatherId = rdr["fatherid"].ToString();
                 if (age >= 40)
                 {
-                    elderEmployee.Add(new Employee() { UId = id, Name = name, Age = age, FatherId = fatherId, Gender = gender });
+                    elderEmployee.Add(new Employee() { UId = id, Name = name, Age = age, FatherId = fatherId, Gender = gender, Children = new List<Person>() });
                 }
                 else if (age < 30)
                 {
@@ -495,26 +495,32 @@ namespace ListGenerateApp
                     if (distinctLastName[j] == name[1])
                     {
                         youngEmployee[b].FatherId = fatherid[randomNumber].ToString();
+                        for (int e = 0; e < elderEmployee.Count; e++)
+                        {
+                            if (elderEmployee[e].UId == fatherid[randomNumber])
+                            {
+                                elderEmployee[e].Children.Add(new Person() { Name = youngEmployee[b].Name, Age = youngEmployee[b].Age, Gender = youngEmployee[b].Gender, FatherId = "" });
+                            }
+                        }
                     }
                 }
             }
 
-            //youngEmployee.ForEach((item) =>
-            //{
-            //    Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,10} {4,-10}", item.UId, item.Name, item.Age, item.Gender, item.FatherId);
-            //});
-
             foreach (var em in youngEmployee)
             {
-                var listStr = "UPDATE employees SET fatherid = '" + em.FatherId + "' WHERE uid =" + em.UId;
-
-                // Execute a query
-                using (var cmd = new NpgsqlCommand())
+                if (em.FatherId != "")
                 {
-                    cmd.Connection = conn;
-                    cmd.CommandText = listStr;
-                    cmd.ExecuteNonQuery();
+                    var listStr = "UPDATE employees SET fatherid = '" + em.FatherId + "' WHERE uid =" + em.UId;
+
+                    // Execute a query
+                    using (var cmd = new NpgsqlCommand())
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = listStr;
+                        cmd.ExecuteNonQuery();
+                    }
                 }
+
             }
 
             dbListEmployee.Clear();
@@ -550,18 +556,19 @@ namespace ListGenerateApp
                     }
                 }
             }
-            Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,15} {4, 10}", "UId", "Name", "Age", "Gender", "FatherId");
+            Console.WriteLine("{0,10} {1, -20} {2, 15} {3,15} {4, 10}", "UId", "Name", "Age", "Gender", "FatherId");
             dbListEmployee.ForEach((item) =>
             {
-                var value = Convert.ToInt32(item.FatherId);
-                if (value != 0)
+                //var value = Convert.ToInt32(item.FatherId);
+                if (String.IsNullOrWhiteSpace(item.FatherId))
+                {
+                    Console.WriteLine("{0,-10} {1, -20} {2, 15} {3,15} {4,10}", item.UId, item.Name, item.Age, item.Gender, item.FatherId);
+                }
+                else
                 {
                     Console.WriteLine("{0,10} {1, -20} {2, 15} {3,15} {4,10}", item.UId, item.Name, item.Age, item.Gender, item.FatherId);
-                } else
-                {
-                    Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,15} {4,10}", item.UId, item.Name, item.Age, item.Gender, item.FatherId);
                 }
-                
+
                 //item.UId + " " + item.Name + " " + item.Age + " " + item.Gender + " " + item.FatherId
             });
 
@@ -576,7 +583,7 @@ namespace ListGenerateApp
                 Console.WriteLine("4 - Filter list only Male");
                 Console.WriteLine("5 - Filter list only Female");
                 Console.WriteLine("6 - Add new employees");
-                Console.WriteLine("7 - Find family tree");
+                Console.WriteLine("7 - Family tree");
                 Console.WriteLine("Enter 0 to save and end program!");
                 option = int.Parse(Console.ReadLine());
                 if (option == 0)
@@ -747,8 +754,21 @@ namespace ListGenerateApp
 
                             break;
                         case (7):
-                            var familyLastName = Console.ReadLine();
-                            Console.WriteLine(familyLastName);
+                            Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,10}", "UId", "Name", "Age", "Gender");
+                            elderEmployee.ForEach((item) =>
+                            {
+
+                                Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,10}", item.UId, item.Name, item.Age, item.Gender);
+                                if (item.Children.Count > 0)
+                                {
+                                    Console.WriteLine("Children:");
+                                    item.Children.ForEach((em) =>
+                                    {
+                                        Console.WriteLine("-------- {0,-20} {1, 15} {2, 10}", em.Name, em.Age, em.Gender);
+                                    });
+                                }
+
+                            });
                             break;
                         default:
                             break;

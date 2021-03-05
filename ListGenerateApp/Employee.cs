@@ -11,5 +11,11 @@ namespace ListGenerateApp
             get;
             set;
         }
+
+        public List<Person> Children
+        {
+            get;
+            set;
+        }
     }
 }
