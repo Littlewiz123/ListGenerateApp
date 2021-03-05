@@ -611,101 +611,19 @@ namespace ListGenerateApp
                     switch (option)
                     {
                         case (1):
-                            Console.WriteLine("Enter keyword");
-                            string keyword = Console.ReadLine().ToLower();
-                            List<Employee> filterList = new List<Employee>();
-                            for (int i = 0; i < dbListEmployee.Count; i++)
-                            {
-                                if (dbListEmployee[i].Name.ToLower().IndexOf(keyword) != -1)
-                                {
-                                    filterList.Add(new Employee() { UId = dbListEmployee[i].UId, Name = dbListEmployee[i].Name, Age = dbListEmployee[i].Age, FatherId = dbListEmployee[i].FatherId, Gender = dbListEmployee[i].Gender });
-                                }
-                            }
-                            if (filterList.Count > 0)
-                            {
-                                Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,10}", "UId", "Name", "Age", "Gender");
-                                filterList.ForEach((item) =>
-                                {
-                                    Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,10}", item.UId, item.Name, item.Age, item.Gender);
-                                    //item.UId + " " + item.Name + " " + item.Age + " " + item.Gender + " " + item.FatherId
-                                });
-                            }
-                            else
-                            {
-                                Console.WriteLine("No Result Found!");
-                            }
+                            
                             break;
                         case (2):
-                            for (int i = 0; i < dbListEmployee.Count; i++) //Compare Name method
-                            {
-                                for (int j = 0; j < dbListEmployee.Count - 1; j++)
-                                {
-                                    if (dbListEmployee[j].Name.CompareTo(dbListEmployee[j + 1].Name) > 0)
-                                    {
-                                        var temp = dbListEmployee[j];
-                                        dbListEmployee[j] = dbListEmployee[j + 1];
-                                        dbListEmployee[j + 1] = temp;
-                                    }
-                                }
-                            }
-                            Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,10}", "UId", "Name", "Age", "Gender");
-                            dbListEmployee.ForEach((item) =>
-                            {
-                                Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,10}", item.UId, item.Name, item.Age, item.Gender);
-                                //item.UId + " " + item.Name + " " + item.Age + " " + item.Gender + " " + item.FatherId
-                            });
+                            
                             break;
                         case (3):
-                            for (int i = 0; i < dbListEmployee.Count; i++) //Compare Age method 
-                            {
-                                for (int j = 0; j < dbListEmployee.Count - 1; j++)
-                                {
-                                    if (dbListEmployee[j].Age.CompareTo(dbListEmployee[j + 1].Age) > 0)
-                                    {
-                                        var temp = dbListEmployee[j];
-                                        dbListEmployee[j] = dbListEmployee[j + 1];
-                                        dbListEmployee[j + 1] = temp;
-                                    }
-                                }
-                            }
-                            Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,10}", "UId", "Name", "Age", "Gender");
-                            dbListEmployee.ForEach((item) =>
-                            {
-                                Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,10}", item.UId, item.Name, item.Age, item.Gender);
-                                //item.UId + " " + item.Name + " " + item.Age + " " + item.Gender + " " + item.FatherId
-                            });
+                            
                             break;
                         case (4):
-                            List<Employee> filterMaleList = new List<Employee>();
-                            for (int i = 0; i < dbListEmployee.Count; i++)
-                            {
-                                if (dbListEmployee[i].Gender == "Male")
-                                {
-                                    filterMaleList.Add(new Employee() { UId = dbListEmployee[i].UId, Name = dbListEmployee[i].Name, Age = dbListEmployee[i].Age, Gender = dbListEmployee[i].Gender, FatherId = dbListEmployee[i].FatherId });
-                                }
-                            }
-                            Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,10}", "UId", "Name", "Age", "Gender");
-                            filterMaleList.ForEach((item) =>
-                            {
-                                Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,10}", item.UId, item.Name, item.Age, item.Gender);
-                                //item.UId + " " + item.Name + " " + item.Age + " " + item.Gender + " " + item.FatherId
-                            });
+                            
                             break;
                         case (5):
-                            List<Employee> filterFemaleList = new List<Employee>();
-                            for (int i = 0; i < dbListEmployee.Count; i++)
-                            {
-                                if (dbListEmployee[i].Gender == "Female")
-                                {
-                                    filterFemaleList.Add(new Employee() { UId = dbListEmployee[i].UId, Name = dbListEmployee[i].Name, Age = dbListEmployee[i].Age, Gender = dbListEmployee[i].Gender, FatherId = dbListEmployee[i].FatherId });
-                                }
-                            }
-                            Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,10}", "UId", "Name", "Age", "Gender");
-                            filterFemaleList.ForEach((item) =>
-                            {
-                                Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,10}", item.UId, item.Name, item.Age, item.Gender);
-                                //item.UId + " " + item.Name + " " + item.Age + " " + item.Gender + " " + item.FatherId
-                            });
+                            
                             break;
                         case (6):
                             Console.WriteLine("Enter quantity of employees to save to Database: ");

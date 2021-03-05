@@ -6,11 +6,11 @@ namespace ListGenerateApp
 {
     class Person
     {
-        public string FatherId
-        {
-            get;
-            set;
-        }
+        //public string FatherId
+        //{
+        //    get;
+        //    set;
+        //}
 
         public string Name
         {
@@ -25,6 +25,24 @@ namespace ListGenerateApp
         }
 
         public string Gender
+        {
+            get;
+            set;
+        }
+
+        public DateTime Birthbay
+        {
+            get;
+            set;
+        }
+
+        public List<Person> Parent
+        {
+            get;
+            set;
+        }
+
+        public List<Person> Children
         {
             get;
             set;
