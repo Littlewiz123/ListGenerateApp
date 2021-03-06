@@ -6,13 +6,13 @@ namespace ListGenerateApp
 {
     class Employee : Person
     {
-        public int UId
+        public int eid
         {
             get;
             set;
         }
 
-        public List<Person> Children
+        public string Department
         {
             get;
             set;
