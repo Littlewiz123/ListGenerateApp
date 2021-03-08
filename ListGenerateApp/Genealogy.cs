@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ListGenerateApp
 {
-    class Genealogy : Population
+    class Genealogy : Population<Person>
     {
         public void DrawFamilyTree(Person person)
         {

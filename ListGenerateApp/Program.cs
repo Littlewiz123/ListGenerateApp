@@ -347,8 +347,18 @@ namespace ListGenerateApp
             return gender;
         }
 
+
+        static string GetRandomDepartment()
+        {
+            string[] departments = new string[] { "Accountant", "Business", "Makerting", "Administrative", "Information technology" };
+            Random rand = new Random();
+            int index = rand.Next(departments.Length);
+            string department = departments[index];
+            return department;
+        }
         static void Main(string[] args)
         {
+            Company company = new Company();
             List<Employee> dbListEmployee = new List<Employee>();
             List<Employee> elderEmployee = new List<Employee>();
             List<Employee> youngEmployee = new List<Employee>();
@@ -361,7 +371,7 @@ namespace ListGenerateApp
 
             Console.WriteLine("Checking Database...");
 
-            NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM users", conn);
+            NpgsqlCommand command = new NpgsqlCommand("SELECT users.*, employees.department FROM users INNER JOIN employees ON users.eid = employees.id", conn);
 
             // Execute the query and obtain a result set
             NpgsqlDataReader dr = command.ExecuteReader();
@@ -374,43 +384,93 @@ namespace ListGenerateApp
                 int age = Convert.ToInt32(dr["age"]);
                 string gender = dr["gender"].ToString();
                 string birthday = dr["birthday"].ToString();
+                string department = dr["department"].ToString();
                 DateTime date = Convert.ToDateTime(birthday);
                 List<Person> children = new List<Person>();
                 List<Person> parent = new List<Person>();
                 //string birthday = dr["birthday"];
-                dbListEmployee.Add(new Employee() { Name = name, Age = age, Birthbay = date, Gender = gender, Children= children });
+                dbListEmployee.Add(new Employee() { Name = name, Age = age, Birthbay = date, Gender = gender, Children = children, Department = department });
             }
 
             dr.Close();
 
-            //if (dbListEmployee.Count >= 0 && dbListEmployee.Count < 1000)
-            //{
-            //    //Genarate 1000 Employees in Database
-            //    for (int i = 0; i < 1000; i++)
-            //    {
-            //        Random r = new Random();
-            //        int id = i + 1;
-            //        int randAge = r.Next(18, 50);
-            //        string randGender = GetRandomGender();
-            //        string randName = GenRandomFirstName(randGender) + " " + GenRandomLastName();
-            //        string fatherId = "";
-            //        // Define a query
-            //        var listStr = "INSERT INTO employees (name, age, gender, fatherId) VALUES ('" + randName + "'," + randAge + ",'" + randGender + "','" + fatherId + "')";
+            if (dbListEmployee.Count >= 0 && dbListEmployee.Count < 1000)
+            {
+                //genarate 1000 employees in database
+                for (int i = 0; i < 1000; i++)
+                {
+                    Random r = new Random();
+                    int randDay = r.Next(1, 28);
+                    int randMonth = r.Next(1, 12);
+                    int randYear = r.Next(1961, 2003);
+                    string date = randYear + "-" + randMonth + "-" + randDay;
+                    int age = 2021 - randYear;
+                    string randgender = GetRandomGender();
+                    string randname = GenRandomFirstName(randgender) + " " + GenRandomLastName();
+                    int eid = i + 1;
+                    //Save data to Users table
+                    // define a query
+                    var liststr = "insert into users (name, age, gender, birthday, eid) values ('" + randname + "'," + age + ",'" + randgender + "','" + date + "', " + eid + ")";
 
-            //        // Execute a query
-            //        using (var cmd = new NpgsqlCommand())
-            //        {
-            //            cmd.Connection = conn;
-            //            cmd.CommandText = listStr;
-            //            cmd.ExecuteNonQuery();
-            //        }
-            //    }
-            //}
+                    //// execute a query
+                    using (var cmd = new NpgsqlCommand())
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = liststr;
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    //Save data to Employees table
+                    var department = GetRandomDepartment();
+                    int randUid = r.Next(1, 1000);
+                    int uid = i + 1;
+                    //define a query
+                    var emSql = "insert into employees (uid, department) values (" + uid + ",'" + department + "')";
+
+                    //// execute a query
+                    using (var cmd = new NpgsqlCommand())
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = emSql;
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+
+            dbListEmployee.Clear();
+
+            NpgsqlCommand sqlCmd = new NpgsqlCommand("SELECT users.*, employees.department FROM users INNER JOIN employees ON users.eid = employees.id", conn);
+
+            // Execute the query and obtain a result set
+            NpgsqlDataReader dr1 = sqlCmd.ExecuteReader();
+
+            // Output rows
+            while (dr.Read())
+            {
+                //int id = Convert.ToInt32(dr["id"]);
+                string name = dr1["name"].ToString();
+                int age = Convert.ToInt32(dr1["age"]);
+                string gender = dr1["gender"].ToString();
+                string birthday = dr1["birthday"].ToString();
+                string department = dr1["department"].ToString();
+                int eid = Convert.ToInt32(dr1["eid"]);
+                DateTime date = Convert.ToDateTime(birthday);
+                List<Person> children = new List<Person>();
+                List<Person> parent = new List<Person>();
+                //string birthday = dr["birthday"];
+                dbListEmployee.Add(new Employee() { Name = name, Age = age, Birthbay = date, Gender = gender, Children = children, Department = department, eid = eid, Parent = parent });
+                company.People = dbListEmployee;
+            }
+
+            dr.Close();
+
+            company.People.ForEach((item) =>
+            {
+                Console.WriteLine(item.Name + " " + item.Age + " " + item.eid);
+            });
 
             //List<Employee> listEmployee = new List<Employee>();
             //List<Employee> saveListEmployee = new List<Employee>();
-
-            dbListEmployee.Clear();
 
             //string sql = "SELECT * FROM employees";
             //var cmd1 = new NpgsqlCommand(sql, conn);
@@ -519,7 +579,8 @@ namespace ListGenerateApp
                     switch (option)
                     {
                         case (1):
-
+                            var searchStr = Console.ReadLine();
+                            var filterList = Company.SearchForPerson(searchStr, company.People);
                             break;
                         case (2):
 
@@ -580,9 +641,9 @@ namespace ListGenerateApp
 
                             break;
                         case (7): //Draw Family Tree
-                            //Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,10}", "UId", "Name", "Age", "Gender");
-                            //elderEmployee.ForEach((item) =>
-                            //{
+                                  //Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,10}", "UId", "Name", "Age", "Gender");
+                                  //elderEmployee.ForEach((item) =>
+                                  //{
 
                             //    Console.WriteLine("{0,-5} {1, -20} {2, 15} {3,10}", item.UId, item.Name, item.Age, item.Gender);
                             //    if (item.Children.Count > 0)

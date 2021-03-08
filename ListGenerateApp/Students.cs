@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ListGenerateApp
 {
-    class Students : Population
+    class Students : Population<Person>
     {
         //public List<Student> Students
         //{

@@ -4,51 +4,51 @@ using System.Text;
 
 namespace ListGenerateApp
 {
-    class Population
+    class Population<T>
     {
         public int Size
         {
             get;
             set;
         }
-        public List<Person> People
+        public List<T> People
         {
             get;
             set;
         }
 
-        protected List<Person> GetStudents()
-        {
-            List<Person> students = new List<Person>();
-            if (People.Count > 0)
-            {
-                for (int n = 0; n < People.Count; n++)
-                {
-                    if (People[n].Age < 19 && People[n].Age > 4)
-                    {
-                        students.Add(new Person() { Name = People[n].Name, Age = People[n].Age, Gender = People[n].Gender });
-                    }
-                }
-            }
-            return students;
-        }
+        //protected List<Person> GetStudents()
+        //{
+        //    List<Person> students = new List<Person>();
+        //    if (People.Count > 0)
+        //    {
+        //        for (int n = 0; n < People.Count; n++)
+        //        {
+        //            if (People[n].Age < 19 && People[n].Age > 4)
+        //            {
+        //                students.Add(new Person() { Name = People[n].Name, Age = People[n].Age, Gender = People[n].Gender });
+        //            }
+        //        }
+        //    }
+        //    return students;
+        //}
 
-        public List<Person> SearchForPeople(string keyword, List<Person> list)
+        public static List<T> SearchForPerson(string keyword, List<T> list)
         {
-            List<Person> filterList = new List<Person>();
+            List<T> filterList = new List<T>();
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].Name.ToLower().IndexOf(keyword) != -1)
+                if (((T)list[i]).Name.ToLower().IndexOf(keyword) != -1)
                 {
-                    filterList.Add(new Person() { Name = list[i].Name, Birthbay = list[i].Birthbay, Age = list[i].Age, Gender = list[i].Gender });
+                    filterList.Add(new Employee() {  });
                 }
             }
             return filterList;
         }
 
-        public List<Person> OrderByName(List<Person> list)
+        public List<T> OrderByName(List<Person> list)
         {
-            List<Person> listOrderByName = new List<Person>();
+            List<T> listOrderByName = new List<Person>();
             for (int i = 0; i < list.Count; i++) //Compare Name method
             {
                 for (int j = 0; j < list.Count - 1; j++)
