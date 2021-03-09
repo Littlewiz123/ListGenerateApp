@@ -4,14 +4,14 @@ using System.Text;
 
 namespace ListGenerateApp
 {
-    class Population<T>
+    class Population
     {
         public int Size
         {
             get;
             set;
         }
-        public List<T> People
+        public List<Person> People
         {
             get;
             set;
@@ -33,79 +33,98 @@ namespace ListGenerateApp
         //    return students;
         //}
 
-        public static List<T> SearchForPerson(string keyword, List<T> list)
+        public virtual void SearchForPerson(string keyword)
         {
-            List<T> filterList = new List<T>();
-            for (int i = 0; i < list.Count; i++)
+            List<Person> filterList = new List<Person>();
+            for (int i = 0; i < People.Count; i++)
             {
-                if (((T)list[i]).Name.ToLower().IndexOf(keyword) != -1)
+                if (People[i].Name.ToLower().IndexOf(keyword) != -1)
                 {
-                    filterList.Add(new Employee() {  });
+                    filterList.Add(new Person() { Name = People[i].Name, Age = People[i].Age, Birthbay = People[i].Birthbay, Children = People[i].Children, Gender = People[i].Gender, Parent = People[i].Parent});
                 }
             }
-            return filterList;
+            Console.WriteLine("{0,-20} {1, 10} {2, 15} {3,15} {4, 20} {5, 20}", "Name", "Age", "Gender", "Birthday");
+            filterList.ForEach((item) =>
+            {
+                Console.WriteLine("{0,-20} {1, 10} {2, 15} {3,15} {4, 20} {5, 20}", item.Name, item.Age, item.Gender, item.Birthbay.ToString().Substring(0, 10));
+            });
+            //return filterList;
         }
 
-        public List<T> OrderByName(List<Person> list)
+        public virtual void OrderByName()
         {
-            List<T> listOrderByName = new List<Person>();
-            for (int i = 0; i < list.Count; i++) //Compare Name method
+            for (int i = 0; i < People.Count; i++) //Compare Name method
             {
-                for (int j = 0; j < list.Count - 1; j++)
+                for (int j = 0; j < People.Count - 1; j++)
                 {
-                    if (list[j].Name.CompareTo(list[j + 1].Name) > 0)
+                    if (People[j].Name.CompareTo(People[j + 1].Name) > 0)
                     {
-                        var temp = list[j];
-                        list[j] = list[j + 1];
-                        list[j + 1] = temp;
+                        var temp = People[j];
+                        People[j] = People[j + 1];
+                        People[j + 1] = temp;
                     }
                 }
             }
-            return listOrderByName;
+            Console.WriteLine("{0,-20} {1, 10} {2, 15} {3,15} {4, 20} {5, 20}", "Name", "Age", "Gender", "Birthday");
+            People.ForEach((item) =>
+            {
+                Console.WriteLine("{0,-20} {1, 10} {2, 15} {3,15} {4, 20} {5, 20}", item.Name, item.Age, item.Gender, item.Birthbay.ToString().Substring(0, 10));
+            });
         }
 
-        public List<Person> OrderByAge(List<Person> list)
+        public virtual void OrderByAge()
         {
-            List<Person> listOrderByAge = new List<Person>();
-            for (int i = 0; i < list.Count; i++) //Compare Age method 
+            for (int i = 0; i < People.Count; i++) //Compare Age method 
             {
-                for (int j = 0; j < list.Count - 1; j++)
+                for (int j = 0; j < People.Count - 1; j++)
                 {
-                    if (list[j].Age.CompareTo(list[j + 1].Age) > 0)
+                    if (People[j].Age.CompareTo(People[j + 1].Age) > 0)
                     {
-                        var temp = list[j];
-                        list[j] = list[j + 1];
-                        list[j + 1] = temp;
+                        var temp = People[j];
+                        People[j] = People[j + 1];
+                        People[j + 1] = temp;
                     }
                 }
             }
-            return listOrderByAge;
+            Console.WriteLine("{0,-20} {1, 10} {2, 15} {3,15} {4, 20} {5, 20}", "Name", "Age", "Gender", "Birthday");
+            People.ForEach((item) =>
+            {
+                Console.WriteLine("{0,-20} {1, 10} {2, 15} {3,15} {4, 20} {5, 20}", item.Name, item.Age, item.Gender, item.Birthbay.ToString().Substring(0, 10));
+            });
         }
 
-        public List<Person> filterMale(List<Person> list)
+        public virtual void filterMale()
         {
             List<Person> filterMaleList = new List<Person>();
-            for (int i = 0; i < list.Count; i++)
+            for (int i = 0; i < People.Count; i++)
             {
-                if (list[i].Gender == "Male")
+                if (People[i].Gender.Trim() == "Male")
                 {
-                    filterMaleList.Add(new Person() { Name = list[i].Name, Birthbay = list[i].Birthbay, Age = list[i].Age, Gender = list[i].Gender });
+                    filterMaleList.Add(new Person() { Name = People[i].Name, Birthbay = People[i].Birthbay, Age = People[i].Age, Gender = People[i].Gender });
                 }
             }
-            return filterMaleList;
+            Console.WriteLine("{0,-20} {1, 10} {2, 15} {3,15} {4, 20} {5, 20}", "Name", "Age", "Gender", "Birthday");
+            filterMaleList.ForEach((item) =>
+            {
+                Console.WriteLine("{0,-20} {1, 10} {2, 15} {3,15} {4, 20} {5, 20}", item.Name, item.Age, item.Gender, item.Birthbay.ToString().Substring(0, 10));
+            });
         }
 
-        public List<Person> filterFemale(List<Person> list)
+        public virtual void filterFemale()
         {
             List<Person> filterFemaleList = new List<Person>();
-            for (int i = 0; i < list.Count; i++)
+            for (int i = 0; i < People.Count; i++)
             {
-                if (list[i].Gender == "Female")
+                if (People[i].Gender.Trim() == "Female")
                 {
-                    filterFemaleList.Add(new Person() { Name = list[i].Name, Birthbay = list[i].Birthbay, Age = list[i].Age, Gender = list[i].Gender });
+                    filterFemaleList.Add(new Person() { Name = People[i].Name, Birthbay = People[i].Birthbay, Age = People[i].Age, Gender = People[i].Gender });
                 }
             }
-            return filterFemaleList;
+            Console.WriteLine("{0,-20} {1, 10} {2, 15} {3,15} {4, 20} {5, 20}", "Name", "Age", "Gender", "Birthday");
+            filterFemaleList.ForEach((item) =>
+            {
+                Console.WriteLine("{0,-20} {1, 10} {2, 15} {3,15} {4, 20} {5, 20}", item.Name, item.Age, item.Gender, item.Birthbay.ToString().Substring(0, 10));
+            });
         }
     }
 }

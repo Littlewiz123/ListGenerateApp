@@ -4,28 +4,28 @@ using System.Text;
 
 namespace ListGenerateApp
 {
-    class Genealogy : Population<Person>
+    class Genealogy : Population
     {
         public void DrawFamilyTree(Person person)
         {
-            var parent = person.Parent;
+            //var parent = person.Parent;
             var children = person.Children;
-            if (parent.Count > 0)
-            {
-                //Tìm bố mẹ của bố mẹ -> In
-                for (int i = 0; i < parent.Count; i++)
-                {
-                    FindGrandparent(parent[i]);
-                }
-                Console.WriteLine("Parent of" + person.Name + ":");
-                Console.WriteLine("{0, -20} | {1, 15} | {2,15} | {3, 10}", "Name", "Age", "Gender", "Birthday");
-                for (int i = 0; i < parent.Count; i++)
-                {
-                    Console.WriteLine("{0, -20} | {1, 15} | {2,15} | {3, 10}", parent[i].Name, parent[i].Age, parent[i].Gender, parent[i].Birthbay);
-                }
-            }
+            //if (parent.Count > 0)
+            //{
+            //    //Tìm bố mẹ của bố mẹ -> In
+            //    for (int i = 0; i < parent.Count; i++)
+            //    {
+            //        FindGrandparent(parent[i]);
+            //    }
+            //    Console.WriteLine("Parent of" + person.Name + ":");
+            //    Console.WriteLine("{0, -20} | {1, 15} | {2,15} | {3, 10}", "Name", "Age", "Gender", "Birthday");
+            //    for (int i = 0; i < parent.Count; i++)
+            //    {
+            //        Console.WriteLine("{0, -20} | {1, 15} | {2,15} | {3, 10}", parent[i].Name, parent[i].Age, parent[i].Gender, parent[i].Birthbay);
+            //    }
+            //}
             Console.WriteLine("----- Current Person:");
-            Console.WriteLine("----- {0, -20} | {1, 15} | {2,15} | {3, 10}", person.Name, person.Age, person.Gender, person.Birthbay);
+            Console.WriteLine("----- {0, -20} | {1, 15} | {2,15} | {3, 10}", person.Name, person.Age, person.Gender, person.Birthbay.ToString().Substring(0,10));
             if (children.Count > 0)
             {
                 //Tìm con của con -> In
@@ -42,23 +42,23 @@ namespace ListGenerateApp
             }
         }
 
-        public void FindGrandparent(Person person)
-        {
-            var parent = person.Parent;
-            if (parent.Count > 0)
-            {
-                Console.WriteLine("Grandparent of " + person.Name + ":");
-                for (int i = 0; i < parent.Count; i++)
-                {
-                    Console.WriteLine("{0, -20} | {1, 15} | {2,15} | {3, 10}", parent[i].Name, parent[i].Age, parent[i].Gender, parent[i].Birthbay);
-                }
-            }
-        }
+        //public void FindGrandparent(Person person)
+        //{
+        //    var parent = person.Parent;
+        //    if (parent.Count > 0)
+        //    {
+        //        Console.WriteLine("Grandparent of " + person.Name + ":");
+        //        for (int i = 0; i < parent.Count; i++)
+        //        {
+        //            Console.WriteLine("{0, -20} | {1, 15} | {2,15} | {3, 10}", parent[i].Name, parent[i].Age, parent[i].Gender, parent[i].Birthbay);
+        //        }
+        //    }
+        //}
 
         public void FindGrandchild(Person person)
         {
             var child = person.Children;
-            if (child.Count > 0)
+            if (child != null && child.Count > 0)
             {
                 //Tìm con của con -> In
                 Console.WriteLine("----- ------ Grandchild of" + person.Name + ":");
