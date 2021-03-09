@@ -33,7 +33,7 @@ namespace ListGenerateApp
                 {
                     FindGrandchild(children[i]);
                 }
-                Console.WriteLine("----- ------ Children of" + person.Name + ":");
+                Console.WriteLine("----- ------ Children of " + person.Name + ":");
                 Console.WriteLine("----- ------ {0, -20} | {1, 15} | {2,15} | {3, 10}", "Name", "Age", "Gender", "Birthday");
                 for (int i = 0; i < children.Count; i++)
                 {

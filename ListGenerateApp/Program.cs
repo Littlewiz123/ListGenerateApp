@@ -365,10 +365,10 @@ namespace ListGenerateApp
             List<Employee> youngEmployee = new List<Employee>();
             List<Person> dbList = new List<Person>();
             // Specify connection options and open an connection
-            //NpgsqlConnection conn = new NpgsqlConnection("Server=127.0.0.1;User Id=POSMAN;" +
-            //                        "Password=apzon123;Database=Duc_Database;");
-            NpgsqlConnection conn = new NpgsqlConnection("Server=127.0.0.1;User Id=postgres; " +
-             "Password=123456;Database=Learn_.Net;");
+            NpgsqlConnection conn = new NpgsqlConnection("Server=172.16.8.20;User Id=POSMAN;" +
+                                    "Password=apzon123;Database=Duc_Database;");
+            //NpgsqlConnection conn = new NpgsqlConnection("Server=127.0.0.1;User Id=postgres; " +
+            // "Password=123456;Database=Learn_.Net;");
             conn.Open();
 
             Console.WriteLine("Checking Database...");
@@ -550,7 +550,8 @@ namespace ListGenerateApp
                     }
                 }
 
-                if(oldPeople.Count > 0 && youngPeople.Count > 0) {
+                if (oldPeople.Count > 0 && youngPeople.Count > 0)
+                {
                     for (int d = 0; d < oldPeople.Count; d++)
                     {
                         Random r = new Random();
