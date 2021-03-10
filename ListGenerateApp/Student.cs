@@ -4,15 +4,9 @@ using System.Text;
 
 namespace ListGenerateApp
 {
-    class Employee : Person
+    class Student : Person
     {
-        public int eid
-        {
-            get;
-            set;
-        }
-
-        public string Department
+        public string sid
         {
             get;
             set;
