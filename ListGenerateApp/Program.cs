@@ -373,28 +373,34 @@ namespace ListGenerateApp
 
             Console.WriteLine("Checking Database...");
 
-            NpgsqlCommand command = new NpgsqlCommand("SELECT users.*, employees.department FROM users INNER JOIN employees ON users.eid = employees.id", conn);
-
-            // Execute the query and obtain a result set
-            NpgsqlDataReader dr = command.ExecuteReader();
-
-            // Output rows
-            while (dr.Read())
+            //Check Database have record
+            try
             {
-                //int id = Convert.ToInt32(dr["id"]);
-                string name = dr["name"].ToString();
-                int age = Convert.ToInt32(dr["age"]);
-                string gender = dr["gender"].ToString();
-                string birthday = dr["birthday"].ToString();
-                string department = dr["department"].ToString();
-                DateTime date = Convert.ToDateTime(birthday);
-                List<Person> children = new List<Person>();
-                List<Person> parent = new List<Person>();
-                //string birthday = dr["birthday"];
-                dbListEmployee.Add(new Employee() { Name = name, Age = age, Birthbay = date, Gender = gender, Children = children, Department = department });
-            }
+                NpgsqlCommand command = new NpgsqlCommand("SELECT users.*, employees.department FROM users LEFT JOIN employees ON users.eid = employees.id", conn);
 
-            dr.Close();
+                // Execute the query and obtain a result set
+                NpgsqlDataReader dr = command.ExecuteReader();
+
+                // Output rows
+                while (dr.Read())
+                {
+                    //int id = Convert.ToInt32(dr["id"]);
+                    string name = dr["name"].ToString();
+                    int age = Convert.ToInt32(dr["age"]);
+                    string gender = dr["gender"].ToString();
+                    string birthday = dr["birthday"].ToString();
+                    string department = dr["department"].ToString();
+                    DateTime date = Convert.ToDateTime(birthday);
+                    //string birthday = dr["birthday"];
+                    dbListEmployee.Add(new Employee() { Name = name, Age = age, Birthbay = date, Gender = gender, Department = department });
+                }
+
+                dr.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            };
 
             if (dbListEmployee.Count >= 0 && dbListEmployee.Count < 1000)
             {
@@ -404,68 +410,106 @@ namespace ListGenerateApp
                     Random r = new Random();
                     int randDay = r.Next(1, 28);
                     int randMonth = r.Next(1, 12);
-                    int randYear = r.Next(1961, 2003);
+                    int randYear = r.Next(1941, 2003);
                     string date = randYear + "-" + randMonth + "-" + randDay;
                     int age = 2021 - randYear;
                     string randgender = GetRandomGender();
                     string randname = GenRandomFirstName(randgender) + " " + GenRandomLastName();
-                    int eid = i + 1;
-                    //Save data to Users table
-                    // define a query
-                    var liststr = "insert into users (name, age, gender, birthday, eid) values ('" + randname + "'," + age + ",'" + randgender + "','" + date + "', " + eid + ")";
-
-                    //// execute a query
-                    using (var cmd = new NpgsqlCommand())
+                    int eid;
+                    if (age < 60)
                     {
-                        cmd.Connection = conn;
-                        cmd.CommandText = liststr;
-                        cmd.ExecuteNonQuery();
+                        eid = i + 1;
+                        //Save data to Users table
+                        try
+                        {
+                            // define a query
+                            var liststr = "insert into users (name, age, gender, birthday, eid) values ('" + randname + "'," + age + ",'" + randgender + "','" + date + "', " + eid + ")";
+
+                            //// execute a query
+                            using (var cmd = new NpgsqlCommand())
+                            {
+                                cmd.Connection = conn;
+                                cmd.CommandText = liststr;
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            var department = GetRandomDepartment();
+                            int randUid = r.Next(1, 1000);
+                            int uid = i + 1;
+
+                            //define a query
+                            var emSql = "insert into employees (id, uid, department) values (" + eid + "," + uid + ",'" + department + "')";
+
+                            // execute a query
+                            using (var cmd = new NpgsqlCommand())
+                            {
+                                cmd.Connection = conn;
+                                cmd.CommandText = emSql;
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                     }
-
-                    //Save data to Employees table
-                    var department = GetRandomDepartment();
-                    int randUid = r.Next(1, 1000);
-                    int uid = i + 1;
-                    //define a query
-                    var emSql = "insert into employees (uid, department) values (" + uid + ",'" + department + "')";
-
-                    //// execute a query
-                    using (var cmd = new NpgsqlCommand())
+                    else
                     {
-                        cmd.Connection = conn;
-                        cmd.CommandText = emSql;
-                        cmd.ExecuteNonQuery();
+                        try
+                        {
+                            var liststr = "insert into users (name, age, gender, birthday, eid) values ('" + randname + "'," + age + ",'" + randgender + "','" + date + "', NULL)";
+
+                            //// execute a query
+                            using (var cmd = new NpgsqlCommand())
+                            {
+                                cmd.Connection = conn;
+                                cmd.CommandText = liststr;
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                     }
                 }
             }
 
             dbListEmployee.Clear();
 
-            NpgsqlCommand sqlCmd = new NpgsqlCommand("SELECT users.*, employees.department FROM users INNER JOIN employees ON users.eid = employees.id", conn);
-
-            // Execute the query and obtain a result set
-            NpgsqlDataReader dr1 = sqlCmd.ExecuteReader();
-
-            // Output rows
-            while (dr.Read())
+            //Get newest Data
+            try
             {
-                //int id = Convert.ToInt32(dr["id"]);
-                string name = dr1["name"].ToString();
-                int age = Convert.ToInt32(dr1["age"]);
-                string gender = dr1["gender"].ToString();
-                string birthday = dr1["birthday"].ToString();
-                string department = dr1["department"].ToString();
-                int eid = Convert.ToInt32(dr1["eid"]);
-                DateTime date = Convert.ToDateTime(birthday);
-                List<Person> children = new List<Person>();
-                List<Person> parent = new List<Person>();
-                //string birthday = dr["birthday"];
-                dbList.Add(new Employee() { Name = name, Age = age, Birthbay = date, Gender = gender, Children = children, Department = department, eid = eid, Parent = parent });
-                company.People = dbList;
-                peopleLst.People = dbList;
-            }
+                NpgsqlCommand sqlCmd = new NpgsqlCommand("SELECT users.*, employees.department FROM users LEFT JOIN employees ON users.eid = employees.id", conn);
 
-            dr.Close();
+                // Execute the query and obtain a result set
+                NpgsqlDataReader dr1 = sqlCmd.ExecuteReader();
+
+                // Output rows
+                while (dr1.Read())
+                {
+                    //int id = Convert.ToInt32(dr["id"]);
+                    string name = dr1["name"].ToString();
+                    int age = Convert.ToInt32(dr1["age"]);
+                    string gender = dr1["gender"].ToString();
+                    string birthday = dr1["birthday"].ToString();
+                    string department = dr1["department"].ToString();
+                    int eid = dr1["eid"] == DBNull.Value ? 0 : Convert.ToInt32(dr1["eid"]);
+                    DateTime date = Convert.ToDateTime(birthday);
+                    List<Person> children = new List<Person>();
+                    List<Person> parent = new List<Person>();
+                    //string birthday = dr["birthday"];
+                    dbList.Add(new Employee() { Name = name, Age = age, Birthbay = date, Gender = gender, Department = department, eid = eid });
+                    company.People = dbList;
+                    peopleLst.People = dbList;
+                }
+
+                dr1.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
             Console.WriteLine("{0,-20} {1, 10} {2, 15} {3,15} {4, 20} {5, 20}", "Name", "Age", "Gender", "Birthday", "eId", "Department");
             company.People.ForEach((item) =>
@@ -519,7 +563,7 @@ namespace ListGenerateApp
                 }
             }
 
-            //Get random child and parent
+            //Get father for young people
             for (int a = 0; a < distinctLastName.Count; a++)
             {
                 List<Person> sameLastNameLst = new List<Person>();
@@ -534,32 +578,53 @@ namespace ListGenerateApp
                 List<Person> children = new List<Person>();
                 List<Person> youngPeople = new List<Person>();
                 List<Person> oldPeople = new List<Person>();
+                List<Person> veryOldPeople = new List<Person>();
                 //sameLastNameLst.ForEach((item) =>
                 //{
                 //    Console.WriteLine(item.Name + " " + item.Age);
                 //});
                 for (int c = 0; c < sameLastNameLst.Count; c++)
                 {
-                    if (sameLastNameLst[c].Age >= 45)
+                    if (sameLastNameLst[c].Age >= 60 && sameLastNameLst[c].Gender.TrimEnd() == "Male")
+                    {
+                        veryOldPeople.Add(new Person() { Name = sameLastNameLst[c].Name, Age = sameLastNameLst[c].Age, Birthbay = sameLastNameLst[c].Birthbay, Gender = sameLastNameLst[c].Gender });
+                    }
+                    else if (sameLastNameLst[c].Age >= 45 && sameLastNameLst[c].Gender.TrimEnd() == "Male")
                     {
                         oldPeople.Add(new Person() { Name = sameLastNameLst[c].Name, Age = sameLastNameLst[c].Age, Birthbay = sameLastNameLst[c].Birthbay, Gender = sameLastNameLst[c].Gender });
                     }
-                    else if (sameLastNameLst[c].Age <= 30)
+                    else if (sameLastNameLst[c].Age <= 25)
                     {
                         youngPeople.Add(new Person() { Name = sameLastNameLst[c].Name, Age = sameLastNameLst[c].Age, Birthbay = sameLastNameLst[c].Birthbay, Gender = sameLastNameLst[c].Gender });
                     }
                 }
 
-                if (oldPeople.Count > 0 && youngPeople.Count > 0)
+                if (oldPeople.Count > 0 && youngPeople.Count > 0 && veryOldPeople.Count > 0)
                 {
+                    for (int d = 0; d < youngPeople.Count; d++)
+                    {
+                        Random r = new Random();
+                        int randFatherIndex = r.Next(0, oldPeople.Count);
+                        youngPeople[d].Father = oldPeople[randFatherIndex];
+                    }
+
                     for (int d = 0; d < oldPeople.Count; d++)
                     {
                         Random r = new Random();
-                        int randChildIndex = r.Next(0, youngPeople.Count);
-                        List<Person> Child = new List<Person>();
-                        Child.Add(new Person() { Name = youngPeople[randChildIndex].Name, Age = youngPeople[randChildIndex].Age, Birthbay = youngPeople[randChildIndex].Birthbay, Gender = youngPeople[randChildIndex].Gender });
-                        //youngPeople[d].Children = Child;
-                        oldPeople[d].Children = Child;
+                        int randFatherIndex = r.Next(0, veryOldPeople.Count);
+                        oldPeople[d].Father = veryOldPeople[randFatherIndex];
+                    }
+
+                    //Update class Genealogy
+                    for (int e = 0; e < youngPeople.Count; e++)
+                    {
+                        for (int f = 0; f < peopleLst.People.Count; f++)
+                        {
+                            if (peopleLst.People[f].Name.ToLower() == youngPeople[e].Name.ToLower())
+                            {
+                                peopleLst.People[f] = youngPeople[e];
+                            }
+                        }
                     }
 
                     for (int e = 0; e < oldPeople.Count; e++)
@@ -573,6 +638,7 @@ namespace ListGenerateApp
                         }
                     }
                 }
+
             }
 
             //everyLastName.ForEach((item) => {
@@ -711,19 +777,19 @@ namespace ListGenerateApp
                             var list = peopleLst.People;
                             for (int e = 0; e < list.Count; e++)
                             {
-                                if (list[e].Children.Count > 0 && list[e].Children != null)
+                                if (list[e].Father != null)
                                 {
-                                    Console.WriteLine("{0,-20} {1,10}", list[e].Name, list[e].Children.Count);
+                                    Console.WriteLine("{0,-20} - {1,10} years old lived with his/her family", list[e].Name, list[e].Age);
                                 }
                             }
-                            //Vẽ cây gia đình theo tên
+                            ////Vẽ cây gia đình theo tên
                             Console.WriteLine("Write Person Name");
                             string name = Console.ReadLine();
-                            for (int e = 0; e < peopleLst.People.Count; e++)
+                            for (int e = 0; e < list.Count; e++)
                             {
-                                if (peopleLst.People[e].Name.TrimEnd().ToLower() == name.ToLower())
+                                if (list[e].Name.TrimEnd().ToLower() == name.ToLower())
                                 {
-                                    peopleLst.DrawFamilyTree(peopleLst.People[e]);
+                                    peopleLst.DrawFamilyTree(list[e]);
                                 }
                             }
 

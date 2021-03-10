@@ -40,7 +40,7 @@ namespace ListGenerateApp
             {
                 if (People[i].Name.ToLower().IndexOf(keyword) != -1)
                 {
-                    filterList.Add(new Person() { Name = People[i].Name, Age = People[i].Age, Birthbay = People[i].Birthbay, Children = People[i].Children, Gender = People[i].Gender, Parent = People[i].Parent});
+                    filterList.Add(new Person() { Name = People[i].Name, Age = People[i].Age, Birthbay = People[i].Birthbay, Gender = People[i].Gender, Father = People[i].Father});
                 }
             }
             Console.WriteLine("{0,-20} {1, 10} {2, 15} {3,15} {4, 20} {5, 20}", "Name", "Age", "Gender", "Birthday");
