@@ -36,13 +36,7 @@ namespace ListGenerateApp
             set;
         }
 
-        public List<Person> Parent
-        {
-            get;
-            set;
-        }
-
-        public List<Person> Children
+        public Person Father
         {
             get;
             set;

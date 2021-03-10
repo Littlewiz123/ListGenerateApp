@@ -9,65 +9,58 @@ namespace ListGenerateApp
         public void DrawFamilyTree(Person person)
         {
             //var parent = person.Parent;
-            var children = person.Children;
-            //if (parent.Count > 0)
-            //{
-            //    //Tìm bố mẹ của bố mẹ -> In
-            //    for (int i = 0; i < parent.Count; i++)
-            //    {
-            //        FindGrandparent(parent[i]);
-            //    }
-            //    Console.WriteLine("Parent of" + person.Name + ":");
-            //    Console.WriteLine("{0, -20} | {1, 15} | {2,15} | {3, 10}", "Name", "Age", "Gender", "Birthday");
-            //    for (int i = 0; i < parent.Count; i++)
-            //    {
-            //        Console.WriteLine("{0, -20} | {1, 15} | {2,15} | {3, 10}", parent[i].Name, parent[i].Age, parent[i].Gender, parent[i].Birthbay);
-            //    }
-            //}
-            Console.WriteLine("----- Current Person:");
-            Console.WriteLine("----- {0, -20} | {1, 15} | {2,15} | {3, 10}", person.Name, person.Age, person.Gender, person.Birthbay.ToString().Substring(0,10));
-            if (children.Count > 0)
+            var father = person.Father;
+            if (father != null)
             {
-                //Tìm con của con -> In
-                for (int i = 0; i < children.Count; i++)
+                //Tìm bố mẹ của bố mẹ -> In
+                //FindGrandparent(father);
+                if(FindFather(father))
                 {
-                    FindGrandchild(children[i]);
-                }
-                Console.WriteLine("----- ------ Children of " + person.Name + ":");
-                Console.WriteLine("----- ------ {0, -20} | {1, 15} | {2,15} | {3, 10}", "Name", "Age", "Gender", "Birthday");
-                for (int i = 0; i < children.Count; i++)
+                    Console.WriteLine();
+                    Console.WriteLine("--- Father of " + person.Name + ":");
+                    Console.WriteLine("--- {0, -20} | {1, 15} | {2,15} | {3, 10}", "Name", "Age", "Gender", "Birthday");
+                    Console.WriteLine("--- {0, -20} | {1, 15} | {2,15} | {3, 10}", father.Name, father.Age, father.Gender, father.Birthbay.ToString().Substring(0, 10));
+                    Console.WriteLine("----- Person:");
+                    Console.WriteLine("----- {0, -20} | {1, 15} | {2,15} | {3, 10}", person.Name, person.Age, person.Gender, person.Birthbay.ToString().Substring(0, 10));
+                } else
                 {
-                    Console.WriteLine("----- ------ {0, -20} | {1, 15} | {2,15} | {3, 10}", children[i].Name, children[i].Age, children[i].Gender, children[i].Birthbay);
-                }
+                    Console.WriteLine();
+                    Console.WriteLine("Father of " + person.Name + ":");
+                    Console.WriteLine("{0, -20} | {1, 15} | {2,15} | {3, 10}", "Name", "Age", "Gender", "Birthday");
+                    Console.WriteLine("{0, -20} | {1, 15} | {2,15} | {3, 10}", father.Name, father.Age, father.Gender, father.Birthbay.ToString().Substring(0, 10));
+                    Console.WriteLine("--- Person:");
+                    Console.WriteLine("--- {0, -20} | {1, 15} | {2,15} | {3, 10}", person.Name, person.Age, person.Gender, person.Birthbay.ToString().Substring(0, 10));
+                } 
             }
+            
         }
 
-        //public void FindGrandparent(Person person)
-        //{
-        //    var parent = person.Parent;
-        //    if (parent.Count > 0)
-        //    {
-        //        Console.WriteLine("Grandparent of " + person.Name + ":");
-        //        for (int i = 0; i < parent.Count; i++)
-        //        {
-        //            Console.WriteLine("{0, -20} | {1, 15} | {2,15} | {3, 10}", parent[i].Name, parent[i].Age, parent[i].Gender, parent[i].Birthbay);
-        //        }
-        //    }
-        //}
-
-        public void FindGrandchild(Person person)
+        public bool FindFather(Person person)
         {
-            var child = person.Children;
-            if (child != null && child.Count > 0)
+            var father = person.Father;
+            if (father != null)
             {
-                //Tìm con của con -> In
-                Console.WriteLine("----- ------ Grandchild of" + person.Name + ":");
-                Console.WriteLine("----- ------ {0, -20} | {1, 15} | {2,15} | {3, 10}", "Name", "Age", "Gender", "Birthday");
-                for (int i = 0; i < child.Count; i++)
+                if (FindFather(father))
                 {
-                    Console.WriteLine("----- ------ {0, -20} | {1, 15} | {2,15} | {3, 10}", child[i].Name, child[i].Age, child[i].Gender, child[i].Birthbay);
+                    Console.WriteLine();
+                    Console.WriteLine("--- Father of " + person.Name + ":");
+                    Console.WriteLine("--- {0, -20} | {1, 15} | {2,15} | {3, 10}", "Name", "Age", "Gender", "Birthday");
+                    Console.WriteLine("--- {0, -20} | {1, 15} | {2,15} | {3, 10}", father.Name, father.Age, father.Gender, father.Birthbay.ToString().Substring(0, 10));
+                    Console.WriteLine("----- Person:");
+                    Console.WriteLine("----- {0, -20} | {1, 15} | {2,15} | {3, 10}", person.Name, person.Age, person.Gender, person.Birthbay.ToString().Substring(0, 10));
                 }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Father of " + person.Name + ":");
+                    Console.WriteLine("{0, -20} | {1, 15} | {2,15} | {3, 10}", "Name", "Age", "Gender", "Birthday");
+                    Console.WriteLine("{0, -20} | {1, 15} | {2,15} | {3, 10}", father.Name, father.Age, father.Gender, father.Birthbay.ToString().Substring(0, 10));
+                    Console.WriteLine("--- Person:");
+                    Console.WriteLine("--- {0, -20} | {1, 15} | {2,15} | {3, 10}", person.Name, person.Age, person.Gender, person.Birthbay.ToString().Substring(0, 10));
+                }
+                return true;
             }
+            return false;
         }
     }
 }

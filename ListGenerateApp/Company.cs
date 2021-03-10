@@ -23,7 +23,7 @@ namespace ListGenerateApp
                     var department = ((Employee)People[i]).Department;
                     if (People[i].Name.ToLower().IndexOf(keyword) != -1)
                     {
-                        filterList.Add(new Employee() { Name = People[i].Name, Age = People[i].Age, Birthbay = People[i].Birthbay, Children = People[i].Children, Gender = People[i].Gender, Parent = People[i].Parent, Department = department, eid = emId });
+                        filterList.Add(new Employee() { Name = People[i].Name, Age = People[i].Age, Birthbay = People[i].Birthbay, Gender = People[i].Gender, Father = People[i].Father, Department = department, eid = emId });
                     }
                 }
             }
@@ -97,7 +97,7 @@ namespace ListGenerateApp
                     {
                         var emId = ((Employee)People[i]).eid;
                         var department = ((Employee)People[i]).Department;
-                        filterMaleList.Add(new Employee() { Name = People[i].Name, Age = People[i].Age, Birthbay = People[i].Birthbay, Children = People[i].Children, Gender = People[i].Gender, Parent = People[i].Parent, Department = department, eid = emId });
+                        filterMaleList.Add(new Employee() { Name = People[i].Name, Age = People[i].Age, Birthbay = People[i].Birthbay, Gender = People[i].Gender, Father = People[i].Father, Department = department, eid = emId });
                     }
                 }
             }
@@ -120,7 +120,7 @@ namespace ListGenerateApp
                     {
                         var emId = ((Employee)People[i]).eid;
                         var department = ((Employee)People[i]).Department;
-                        filterFemaleList.Add(new Employee() { Name = People[i].Name, Age = People[i].Age, Birthbay = People[i].Birthbay, Children = People[i].Children, Gender = People[i].Gender, Parent = People[i].Parent, Department = department, eid = emId });
+                        filterFemaleList.Add(new Employee() { Name = People[i].Name, Age = People[i].Age, Birthbay = People[i].Birthbay, Gender = People[i].Gender, Father = People[i].Father, Department = department, eid = emId });
                     }
                 }
             }
